@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B0F14" />
+<title>ORDINE ESEGUITO · BUY $LORE</title>
+<meta name="description" content="Matteo ha comprato $LORE all'apertura. Congratulazioni, Dottore." />
+<meta property="og:title" content="ORDINE ESEGUITO · BUY $LORE" />
+<meta property="og:description" content="Matteo ha comprato $LORE all'apertura. Congratulazioni, Dottore." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#05070a; --black:#0b0f14; --navy:#1b2a4a; --panel:#13213f;
+    --gold:#f5c542; --gold-dark:#9c7a1c; --green:#3bd16f; --green-dark:#1f7a40;
+    --red:#c62f35; --red-dark:#7a1c20; --white:#f4f4f4; --muted:#a9bccf;
+    --pixel:"Press Start 2P", ui-monospace, monospace; --led:"VT323", ui-monospace, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ink);color:var(--white);font-family:var(--led);}
+  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;
+    background:radial-gradient(ellipse at top,#14213d 0%,var(--ink) 60%);}
+  .brand{font-family:var(--pixel);font-size:10px;color:var(--gold);letter-spacing:1px;margin:4px 0 12px;text-align:center;line-height:1.6}
+  .brand span{color:var(--muted)}
+  .wrap{width:100%;max-width:960px;position:relative}
+  .screen{position:relative;border:4px solid var(--gold);box-shadow:0 0 0 4px var(--black),0 0 40px rgba(245,197,66,.15);background:#000}
+  canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+  .crt{pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+  .dialog{margin-top:14px;border:4px solid var(--navy);background:var(--black);padding:12px 14px;min-height:64px;font-size:24px;line-height:1.15;color:var(--white);box-shadow:0 0 0 4px var(--black)}
+  .dialog .who{color:var(--gold)}
+  .dialog .ok{color:var(--green)}
+  .caret{display:inline-block;width:10px;height:20px;background:var(--green);vertical-align:-3px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+  .btn{font-family:var(--pixel);font-size:12px;border:0;padding:14px 18px;cursor:pointer;color:var(--black);
+    background:var(--green);box-shadow:0 6px 0 var(--green-dark),0 0 0 4px var(--black);transform:translateY(0);transition:transform .05s}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green-dark),0 0 0 4px var(--black)}
+  .btn.gold{background:var(--gold);box-shadow:0 6px 0 var(--gold-dark),0 0 0 4px var(--black)}
+  .btn.ghost{background:var(--navy);color:var(--white);box-shadow:0 6px 0 var(--panel),0 0 0 4px var(--black)}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+    background:rgba(5,7,10,.82);z-index:5;text-align:center;padding:16px}
+  .start h1{font-family:var(--pixel);font-size:clamp(18px,4.5vw,40px);margin:0;color:var(--gold);text-shadow:4px 4px 0 var(--gold-dark)}
+  .start p{margin:0;font-size:clamp(18px,3vw,26px);color:var(--muted)}
+  .ticket{display:none;margin:22px auto 0;max-width:560px;background:#fbf8f1;color:#14213d;border:4px solid var(--black);
+    box-shadow:8px 8px 0 var(--gold);padding:18px 20px 22px;position:relative;font-size:22px}
+  .ticket.show{display:block;animation:pop .35s steps(4)}
+  @keyframes pop{from{transform:scale(.8) rotate(-2deg)}to{transform:none}}
+  .ticket h2{font-family:var(--pixel);font-size:13px;margin:0 0 4px;letter-spacing:1px}
+  .ticket .sub{color:#4f6280;font-size:18px;margin-bottom:12px}
+  .ticket table{width:100%;border-collapse:collapse}
+  .ticket td{padding:4px 0;border-bottom:2px dashed #d6cfbf;vertical-align:top}
+  .ticket td:first-child{color:#4f6280;width:42%}
+  .ticket td:last-child{text-align:right;font-weight:bold}
+  .ticket .up{color:var(--green-dark)}
+  .stamp{position:absolute;right:14px;top:10px;font-family:var(--pixel);font-size:11px;color:var(--green-dark);
+    border:3px solid var(--green-dark);padding:6px 8px;transform:rotate(8deg);background:rgba(59,209,111,.08)}
+  .note{margin-top:14px;font-size:22px;line-height:1.2}
+  .note b{font-family:var(--pixel);font-size:11px;display:block;margin-bottom:6px;color:var(--red)}
+  .sign{margin-top:12px;text-align:right;color:#4f6280}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--red);color:var(--white);
+    font-family:var(--pixel);font-size:11px;padding:12px 14px;box-shadow:0 0 0 4px var(--black);z-index:20;display:none;text-align:center;max-width:92vw;line-height:1.6}
+  .toast.show{display:block}
+  .skip{position:absolute;right:10px;top:10px;z-index:4;font-size:9px;padding:8px 10px}
+  .skip[hidden]{display:none}
+  .next{display:none;margin:18px auto 0;text-align:center}
+  .next.show{display:block}
+  .chapter{display:none;margin:22px auto 0;max-width:640px;border:4px solid var(--gold);background:var(--panel);padding:16px 18px 20px;box-shadow:0 0 0 4px var(--black)}
+  .chapter.show{display:block;animation:pop .3s steps(3)}
+  .chapter .tag{font-family:var(--pixel);font-size:9px;color:var(--muted);margin-bottom:8px;letter-spacing:1px}
+  .chapter h2{font-family:var(--pixel);font-size:14px;color:var(--gold);margin:0 0 12px;line-height:1.5}
+  .chapter .q{font-size:24px;line-height:1.2;margin-bottom:14px}
+  .chapter .q i{color:var(--muted);font-style:normal}
+  .chapter .choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .chapter .choices .btn{font-size:10px;line-height:1.5;padding:12px 10px;background:var(--white);color:var(--black);box-shadow:0 6px 0 #9aa7b8,0 0 0 4px var(--black)}
+  .chapter .choices .btn:hover{background:var(--gold)}
+  .chapter .reply{display:none;margin-top:16px;font-size:23px;line-height:1.2;border-left:6px solid var(--green);padding:6px 10px;background:rgba(59,209,111,.08)}
+  .chapter .reply.show{display:block}
+  .chapter .reply b{color:var(--gold);font-weight:normal}
+  .chapter .go{margin-top:16px;text-align:right}
+  .report{font-size:22px;line-height:1.25}
+  .report .big{display:flex;gap:12px;margin:6px 0 14px;flex-wrap:wrap}
+  .report .kpi{flex:1;min-width:130px;background:var(--black);border:3px solid var(--navy);padding:8px 10px}
+  .report .kpi small{display:block;color:var(--muted);font-size:17px}
+  .report .kpi span{font-family:var(--led);font-size:30px;color:var(--green)}
+  .report h4{font-family:var(--pixel);font-size:10px;margin:12px 0 6px;color:var(--gold)}
+  .report ul{margin:0;padding-left:20px}
+  .report .end{margin-top:16px;font-family:var(--pixel);font-size:12px;color:var(--green);text-align:center;line-height:1.8}
+  @media (max-width:560px){.chapter .choices{grid-template-columns:1fr}}
+  .order{display:none;margin:18px auto 0;max-width:560px;border:4px solid var(--green);background:var(--black);padding:14px 16px;box-shadow:0 0 0 4px var(--black),0 0 30px rgba(59,209,111,.25)}
+  .order.show{display:block;animation:pop .3s steps(3)}
+  .order h3{font-family:var(--pixel);font-size:12px;color:var(--green);margin:0 0 10px;animation:blink 1s steps(1) infinite}
+  .order .row{display:flex;justify-content:space-between;font-size:22px;border-bottom:2px dashed #1b2a4a;padding:3px 0}
+  .order .row span:first-child{color:var(--muted)}
+  .order .row span:last-child{color:var(--gold);text-align:right}
+  .order .btns{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;min-height:54px;position:relative}
+  .btn.red{background:var(--red);color:var(--white);box-shadow:0 6px 0 var(--red-dark),0 0 0 4px var(--black)}
+</style>
+</head>
+<body>
+  <div class="brand">LMSE · TERMINALE DELL'EMITTENTE · $LORE<br><span>UTENTE: DOTT. LORENZO MONTELEONE · 7.11.2026</span></div>
+
+  <div class="wrap">
+    <div class="screen">
+      <canvas id="c" width="1280" height="720"></canvas>
+      <div class="crt"></div>
+      <button class="btn ghost skip" id="skip" hidden>SALTA ▶</button>
+      <div class="start" id="start">
+        <h1>DOTTORE, IL MERCATO TI ASPETTA</h1>
+        <p>$LORE sta per quotarsi. La campanella la suoni tu.</p>
+        <button class="btn gold" id="go">ENTRA IN BORSA</button>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialog"><span class="caret"></span></div>
+
+    <div class="controls">
+      <button class="btn gold" id="buy" disabled>🔔 SUONA LA CAMPANELLA</button>
+      <button class="btn ghost" id="replay" disabled>RIVEDI</button>
+    </div>
+
+    <div class="order" id="order">
+      <h3>⚡ ORDINE IN ARRIVO</h3>
+      <div class="row"><span>Da</span><span>Matteo Brambilla</span></div>
+      <div class="row"><span>Tipo</span><span>BUY · a mercato</span></div>
+      <div class="row"><span>Quantità</span><span>TUTTE</span></div>
+      <div class="row"><span>Offerta</span><span id="offer">110 e lode</span></div>
+      <div class="row"><span>Ricevuto</span><span>14:30:00.001</span></div>
+      <div class="btns">
+        <button class="btn" id="accept">ACCETTA</button>
+        <button class="btn red" id="refuse">RIFIUTA</button>
+      </div>
+    </div>
+
+    <div class="ticket" id="ticket">
+      <div class="stamp">ESEGUITO</div>
+      <h2>CONFERMA DI ASSEGNAZIONE</h2>
+      <div class="sub">N. 0711-2026 · LMSE · ore 14:30:00.001</div>
+      <table>
+        <tr><td>Emittente</td><td>Lorenzo Monteleone (tu)</td></tr>
+        <tr><td>Primo azionista</td><td>Matteo Brambilla</td></tr>
+        <tr><td>Operazione</td><td>BUY · a mercato · all'apertura</td></tr>
+        <tr><td>Quantità</td><td>tutte quelle disponibili</td></tr>
+        <tr><td>Prezzo</td><td class="up" id="finalPrice">110 e lode</td></tr>
+        <tr><td>Rating</td><td class="up">STRONG BUY ▲</td></tr>
+        <tr><td>Orizzonte</td><td>lungo periodo (molto lungo)</td></tr>
+        <tr><td>Exit strategy</td><td>nessuna, non vende</td></tr>
+      </table>
+      <div class="note">
+        <b>MESSAGGIO DAL TUO AZIONISTA</b>
+        Fondamentali solidi, growth swing methodology, management affidabile.
+        Ho comprato al primo tick e me le tengo strette.<br><br>
+        Congratulazioni, Dottore! 🎓
+      </div>
+      <div class="sign">— Matteo, azionista dal primo minuto</div>
+    </div>
+    <div class="next" id="next"><button class="btn gold" id="nextBtn">CONTINUA ▶</button></div>
+    <div class="chapter" id="chapter"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const S = 4, W = 320, H = 180;
+  const cv = document.getElementById('c');
+  const g = cv.getContext('2d');
+  g.imageSmoothingEnabled = false;
+
+  const C = {
+    ink:'#05070a', black:'#0b0f14', navy:'#1b2a4a', panel:'#13213f',
+    gold:'#f5c542', goldD:'#9c7a1c', green:'#3bd16f', greenD:'#1f7a40',
+    red:'#e5484d', redD:'#7a1c20', white:'#f4f4f4', muted:'#a9bccf',
+    pink:'#ff4fd8', cyan:'#38c8ff'
+  };
+
+  // ---------- helpers ----------
+  const R = (x,y,w,h,c) => { g.fillStyle=c; g.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h)); };
+  const T = (s,x,y,size,c,font='VT323',align='left') => {
+    g.font = `${size}px "${font}"`; g.fillStyle=c; g.textAlign=align; g.textBaseline='top'; g.fillText(s,x,y);
+  };
+  let seed = 7112026;
+  const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+
+  // ---------- skyline ----------
+  const buildings = [];
+  for (let x=-4; x<W; ) {
+    const w = 14 + Math.floor(rnd()*22), h = 40 + Math.floor(rnd()*90);
+    const wins = [];
+    for (let wy=H-h+6; wy<H-10; wy+=6) for (let wx=x+3; wx<x+w-3; wx+=5) wins.push({x:wx,y:wy,on:rnd()<.45,c:rnd()<.85?C.gold:(rnd()<.5?C.cyan:C.pink)});
+    buildings.push({x,w,h,wins, shade: rnd()<.5?'#0e1830':'#101d3a'});
+    x += w + 1;
+  }
+  const billboards = [{x:196,y:22,w:22,h:14,c:C.pink},{x:296,y:30,w:18,h:22,c:C.cyan},{x:186,y:44,w:12,h:18,c:C.gold}];
+
+  // ---------- sprite (Matteo) ----------
+  const PAL = {H:'#2a1a10',h:'#47301f',S:'#f1c27d',s:'#d9a066',K:'#0b0f14',k:'#2c3e66',W:'#f4f4f4',T:C.gold,t:C.goldD,J:'#3a3f4b',j:'#262a33',M:'#7a1c20',m:'#f4f4f4'};
+  const BODY = [
+    '....HHHHHHHH....',
+    '...HHhHHHHhHH...',
+    '..HHHHHHHHHHHH..',
+    '..HHSSSSSSSSHH..',
+    '..HSSSSSSSSSSH..',
+    '..SKKKKSSKKKKS..',
+    '..SKkKKKKKkKKS..',
+    '..SSKKSSSSKKSS..',
+    '...SSSSssSSSS...',
+    '...SSMmmmmMSS...',
+    '....SSMMMMSS....',
+    '......SssS......',
+    '...JJJWWWWJJJ...',
+    '..JJJJWTTWJJJJ..',
+    '.JJJJJWTTWJJJJJ.',
+    '.JJJJJJTTJJJJJJ.',
+    'JJJJJJJTtJJJJJJJ',
+    'JJjJJJJTtJJJJjJJ',
+    'JJjJJJJJJJJJJjJJ',
+  ];
+  const PX=3, MX=226, MY=55;
+  function drawMatteo(t){
+    const bob = state.phase==='buy' ? (Math.floor(t*8)%2) : 0;
+    BODY.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
+      if(ch!=='.') R(MX+rx*PX-1, MY+ry*PX-(ry<12?bob:0)-1, PX+2, PX+2, '#000');
+    }));
+    BODY.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
+      if(ch==='.') return;
+      let col = PAL[ch];
+      if((ch==='k') && state.price>120) col = C.green;           // occhiali che riflettono il grafico
+      R(MX+rx*PX, MY+ry*PX - (ry<12?bob:0), PX, PX, col);
+    }));
+    // braccio destro (lato sinistro schermo) che preme BUY
+    const down = state.press>0;
+    const armY = MY+12*PX, handY = down ? 111 : 106;
+    R(MX-4, armY, 8, handY-armY+9, '#000');
+    R(MX-3, armY, 6, handY-armY, PAL.J);
+    R(MX-3, armY, 2, handY-armY, PAL.j);
+    R(MX-4, handY, 8, 5, PAL.W);       // polsino
+    R(MX-3, handY+3, 7, 5, PAL.S);     // mano
+    // braccio sinistro appoggiato
+    const ax = MX+16*PX-3;
+    R(ax-2, armY, 9, 117-armY, '#000');
+    R(ax, armY, 6, 114-armY, PAL.J);
+    R(ax+4, armY, 2, 114-armY, PAL.j);
+    R(ax-1, 112, 8, 4, PAL.S);
+  }
+
+  // ---------- chart ----------
+  const candles = [];
+  for(let i=0;i<24;i++) candles.push({o:100,c:100,h:100.4,l:99.6});
+  function tickChart(){
+    const last = candles[candles.length-1];
+    let o = last.c, c;
+    if(state.phase==='pre') c = 100 + (rnd()-.5)*.3;
+    else if(state.phase==='open') c = o + (rnd()-.42)*1.6;
+    else if(state.phase==='buy') c = o + 2 + rnd()*state.momentum;
+    else if(state.phase==='halt') c = o;
+    else c = o + (rnd()-.3)*2;
+    c = Math.max(95,c);
+    candles.push({o,c,h:Math.max(o,c)+rnd()*1.2,l:Math.min(o,c)-rnd()*1.2});
+    if(candles.length>24) candles.shift();
+    state.price = c;
+  }
+  function drawMonitor(t){
+    const x=10,y=18,w=176,h=110;
+    R(x-3,y-3,w+6,h+6,'#000'); R(x-2,y-2,w+4,h+4,'#2b3a5c'); R(x,y,w,h,C.black);
+    R(x+w/2-10,y+h+3,20,6,'#2b3a5c'); R(x+w/2-20,y+h+9,40,3,'#2b3a5c');
+    // header
+    T('$LORE · LMSE', x+5, y+3, 12, C.gold);
+    const up = state.price>=100;
+    const pct = ((state.price/100-1)*100);
+    const priceStr = state.phase==='halt' ? 'HALT' : state.price.toFixed(2);
+    T(priceStr, x+w-5, y+2, 16, state.phase==='halt'?C.red:(up?C.green:C.red), 'VT323','right');
+    T((pct>=0?'▲ +':'▼ ')+pct.toFixed(1)+'%', x+w-5, y+15, 10, up?C.green:C.red,'VT323','right');
+    const label = {pre:'PRE-MARKET', wait:'ORDINE IN ARRIVO', open:'MERCATO APERTO', buy:'ORDINE IN ESECUZIONE', done:'ORDINE ESEGUITO', halt:'CIRCUIT BREAKER'}[state.phase];
+    T(label, x+5, y+15, 10, state.phase==='halt'?C.red:C.muted);
+    // grid
+    for(let gy=y+32; gy<y+h-4; gy+=12) R(x+4,gy,w-8,1,'#132036');
+    // candles
+    const vis = candles; let mn=Infinity,mx=-Infinity;
+    vis.forEach(k=>{mn=Math.min(mn,k.l);mx=Math.max(mx,k.h)});
+    if(mx-mn<4){const m=(mx+mn)/2;mn=m-2;mx=m+2}
+    const top=y+30, bot=y+h-6, Y=v=>bot-(v-mn)/(mx-mn)*(bot-top);
+    vis.forEach((k,i)=>{
+      const cx = x+8+i*7, col = k.c>=k.o?C.green:C.red;
+      R(cx+2, Y(k.h), 1, Math.max(1,Y(k.l)-Y(k.h)), col);
+      const a=Y(Math.max(k.o,k.c)), b=Y(Math.min(k.o,k.c));
+      R(cx, a, 5, Math.max(2,b-a), col);
+    });
+    // marcatore BUY
+    state.buyMarks.forEach(m=>{
+      const i = m - state.tickN + vis.length - 1;
+      if(i<0||i>=vis.length) return;
+      const cx=x+8+i*7, yy=Y(vis[i].l)+3;
+      R(cx,yy,5,7,C.gold); T('B',cx+1,yy-1,8,C.black);
+    });
+    if(state.phase==='halt' && Math.floor(t*3)%2===0){
+      R(x+20,y+50,w-40,26,C.redD); R(x+22,y+52,w-44,22,C.red);
+      T('TITOLO SOSPESO', x+w/2, y+53, 12, C.white,'VT323','center');
+      T('eccesso di rialzo', x+w/2, y+63, 10, C.white,'VT323','center');
+    }
+  }
+
+  // ---------- desk & props ----------
+  function drawDesk(){
+    R(0,112,W,56,'#2b1d14'); R(0,112,W,3,'#5a3d28'); R(0,115,W,1,'#1a110b');
+    // pulsante BUY
+    const pressed = state.press>0;
+    R(212,116,26,7,'#111'); R(213,117,24,5,'#333');
+    R(216, pressed?115:112, 18, pressed?3:5, C.green);
+    R(216, pressed?115:112, 18, 1, '#8ff0b0');
+    R(206,128,38,10,C.gold); R(207,129,36,8,C.goldD); T('BUY',225,128,10,C.black,'VT323','center');
+    // tazza
+    R(286,100,11,12,C.white); R(297,103,3,6,C.white); R(298,104,1,4,'#2b1d14');
+    R(286,104,11,3,C.gold); T('#1',287,104,8,C.black);
+    // vapore
+    if(Math.floor(state.t*2)%2) {R(289,95,1,3,'#556'); R(292,93,1,4,'#556');} else {R(290,94,1,3,'#556'); R(293,95,1,3,'#556');}
+    // targhetta
+    R(46,140,104,16,'#14100c'); R(47,141,102,14,C.goldD); R(48,142,100,12,'#d8b24a');
+    T('MATTEO BRAMBILLA', 98, 143, 11, '#2b1d14','VT323','center');
+  }
+
+  // ---------- ticker ----------
+  let tape = '  $LORE ▲ 110 E LODE  ·  MATTEO BRAMBILLA COMPRA ALL\'APERTURA  ·  RATING: STRONG BUY  ·  TESI: GROWTH SWING METHODOLOGY  ·  ORIZZONTE: PER SEMPRE  ·  NON VENDO  ·  CONGRATULAZIONI DOTTORE  ·';
+  function drawTape(t){
+    R(0,168,W,12,'#000'); R(0,168,W,1,C.gold);
+    g.font='11px "VT323"'; const tw = g.measureText(tape).width;
+    const off = -((t*30)%tw);
+    for(let k=0;k<3;k++) T(tape, off+k*tw, 169, 11, C.gold);
+  }
+
+  // ---------- confetti & fx ----------
+  const parts=[];
+  function burst(n=40){
+    const cols=[C.gold,C.green,C.pink,C.cyan,C.white];
+    for(let i=0;i<n;i++) parts.push({x:60+Math.random()*240,y:-5-Math.random()*40,vx:(Math.random()-.5)*20,vy:20+Math.random()*30,c:cols[i%cols.length],life:4});
+  }
+  function drawParts(dt){
+    for(let i=parts.length-1;i>=0;i--){const p=parts[i]; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=dt; if(p.life<=0||p.y>H){parts.splice(i,1);continue} R(p.x,p.y,2,2,p.c)}
+  }
+  const floats=[];
+  function floatText(s,c){floats.push({s,c,x:206+Math.random()*30,y:100,life:1.2})}
+  function drawFloats(dt){
+    for(let i=floats.length-1;i>=0;i--){const f=floats[i]; f.y-=24*dt; f.life-=dt; if(f.life<=0){floats.splice(i,1);continue} T(f.s,f.x,f.y,12,f.c,'VT323','center')}
+  }
+
+  // ---------- audio ----------
+  let ac=null;
+  function beep(freq,dur=.12,type='square',vol=.06,when=0){
+    if(!ac) return; const o=ac.createOscillator(), v=ac.createGain();
+    o.type=type; o.frequency.value=freq; v.gain.setValueAtTime(vol,ac.currentTime+when);
+    v.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+when+dur);
+    o.connect(v).connect(ac.destination); o.start(ac.currentTime+when); o.stop(ac.currentTime+when+dur+.02);
+  }
+  const bell=()=>{[0,.25,.5].forEach(w=>{beep(1318,.6,'sine',.12,w);beep(1975,.4,'sine',.05,w)})};
+  const kaching=()=>{beep(988,.08,'square',.05);beep(1318,.25,'square',.05,.07)};
+
+  // ---------- dialog ----------
+  const dlg=document.getElementById('dialog');
+  let typing=null;
+  function say(html){
+    clearInterval(typing);
+    const tmp=document.createElement('div'); tmp.innerHTML=html;
+    const full=tmp.textContent; let i=0;
+    typing=setInterval(()=>{
+      i+=2;
+      if(i>=full.length){clearInterval(typing); dlg.innerHTML=html+' <span class="caret"></span>'; return}
+      dlg.textContent=full.slice(0,i);
+    },22);
+  }
+
+  // ---------- sprite generico ----------
+  function drawSprite(rows,pal,x,y,px,talkClosed){
+    rows.forEach((row,ry)=>[...row].forEach((ch,rx)=>{ if(ch!=='.') R(x+rx*px-1,y+ry*px-1,px+2,px+2,'#000'); }));
+    rows.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
+      if(ch==='.') return;
+      let c=ch;
+      if(talkClosed){ if(c==='m') c='M'; else if(ry===10 && c==='M') c='S'; }
+      R(x+rx*px,y+ry*px,px,px,pal[c]);
+    }));
+  }
+  const LORE_ROWS=[
+    '...LlLLLLLLlL...',
+    '..LHHHHHHHHHHL..',
+    '..HHhHHHHHhHHH..',
+    '..HHSSSSSSSSHH..',
+    '..HSSSSSSSSSSH..',
+    '..SSEESSSSEESS..',
+    '..SSSSSssSSSSS..',
+    '...SSSSssSSSS...',
+    '...SSMmmmmMSS...',
+    '....SSMMMMSS....',
+    '......SssS......',
+    '...JJJWWWWJJJ...',
+    '..JJJJWTTWJJJJ..',
+    '.JJJJJWTTWJJJJJ.',
+    '.JJJJJJTTJJJJJJ.',
+    'JJJJJJJTtJJJJJJJ',
+    'JJjJJJJTtJJJJjJJ',
+    'JJjJJJJJJJJJJjJJ',
+    'JJjJJJJJJJJJJjJJ',
+  ];
+  const LORE_PAL={L:'#3f9e3f',l:'#2a6e2a',H:'#3b2414',h:'#5a3a22',S:'#f1c27d',s:'#d9a066',E:'#0b0f14',M:'#7a1c20',m:'#f4f4f4',J:'#2b2e36',j:'#1b1d23',W:'#f4f4f4',T:'#c62f35',t:'#7a1c20'};
+  const HOST_ROWS=LORE_ROWS.map((r,i)=>i===0?'....HHHHHHHH....':r.replace(/[Ll]/g,'H'));
+  const HOST_PAL={...LORE_PAL,H:'#c9ced6',h:'#9aa1ab',J:'#1b2a4a',j:'#0f1a33',T:C.gold,t:C.goldD};
+
+  // ---------- fuochi d'artificio ----------
+  const rockets=[], sparks=[];
+  let noiseBuf=null;
+  function pop(){
+    if(!ac) return;
+    if(!noiseBuf){ noiseBuf=ac.createBuffer(1,ac.sampleRate*.4,ac.sampleRate); const d=noiseBuf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3); }
+    const src=ac.createBufferSource(), v=ac.createGain(); src.buffer=noiseBuf; v.gain.value=.18; src.connect(v).connect(ac.destination); src.start();
+  }
+  function launch(){
+    const cols=[C.gold,C.green,C.pink,C.cyan,C.red,C.white];
+    rockets.push({x:30+Math.random()*260,y:150,vy:-110-Math.random()*40,ty:20+Math.random()*50,c:cols[Math.floor(Math.random()*cols.length)]});
+  }
+  function updFireworks(dt){
+    for(let i=rockets.length-1;i>=0;i--){ const r=rockets[i]; r.y+=r.vy*dt;
+      R(r.x,r.y,1,3,'#ffe9a8');
+      if(r.y<=r.ty){ rockets.splice(i,1); pop();
+        const n=34; for(let k=0;k<n;k++){ const a=k/n*Math.PI*2, sp=35+Math.random()*25; sparks.push({x:r.x,y:r.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,c:r.c,life:1.3}); } } }
+    for(let i=sparks.length-1;i>=0;i--){ const p=sparks[i]; p.vy+=40*dt; p.vx*=.985; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=dt;
+      if(p.life<=0){sparks.splice(i,1);continue}
+      g.globalAlpha=Math.min(1,p.life*1.4); R(p.x,p.y,2,2,p.c); g.globalAlpha=1; }
+  }
+
+  // skyline di New York (livelli)
+  const nycBack=[], nycFront=[];
+  for(let x=0;x<W;){ const w=10+Math.floor(rnd()*16); nycBack.push({x,w,h:50+Math.floor(rnd()*60)}); x+=w; }
+  for(let x=0;x<W;){ const w=14+Math.floor(rnd()*20); const h=30+Math.floor(rnd()*55); const wins=[];
+    for(let wy=150-h+4;wy<146;wy+=5) for(let wx=x+2;wx<x+w-2;wx+=4) if(rnd()<.5) wins.push([wx,wy]);
+    nycFront.push({x,w,h,wins}); x+=w+2; }
+
+  function drawNYC(dt,el){
+    const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,'#0a0620'); sky.addColorStop(1,'#3a1650');
+    g.fillStyle=sky; g.fillRect(0,0,W,H);
+    for(let i=0;i<50;i++){ const sx=(i*97)%W, sy=(i*41)%90; if((Math.floor(el*3)+i)%9) R(sx,sy,1,1,'#5a4a80'); }
+    // grattacielo-simbolo con antenna
+    const tx=150; R(tx+12,8,2,22,'#2a2340'); R(tx+9,30,8,10,'#241d38'); R(tx+5,40,16,16,'#211a34'); R(tx,56,26,94,'#1d1730');
+    for(let wy=60;wy<146;wy+=5) for(let wx=tx+3;wx<tx+24;wx+=4) if(((wx*7+wy*3)>>2)%3) R(wx,wy,2,2,'#f5c54299');
+    R(tx+12,6,2,2,(Math.floor(el*4)%2)?C.red:'#400');
+    nycBack.forEach(b=>R(b.x,150-b.h,b.w,b.h,'#1a1430'));
+    updFireworks(dt);
+    nycFront.forEach(b=>{ R(b.x,150-b.h,b.w,b.h,'#120e22'); b.wins.forEach(([wx,wy])=>R(wx,wy,2,2,'#f5c54266')); });
+    // maxi schermo LED
+    const bx=212,by=78; R(bx-2,by-2,96,34,'#000'); R(bx,by,92,30,'#081018');
+    const on=Math.floor(el*3)%2;
+    T('$LORE',bx+46,by+1,16,on?C.gold:C.green,'VT323','center');
+    T('▲ IPO LIVE · 110L',bx+46,by+16,11,C.green,'VT323','center');
+    // fiume con riflessi
+    R(0,150,W,30,'#07091a');
+    for(let i=0;i<28;i++){ const rx=(i*53+Math.floor(el*20))%W, ry=152+(i*7)%26; R(rx,ry,6+(i%4)*3,1,[C.gold,C.pink,C.cyan,C.green][i%4]+'66'); }
+    // terrazza + Lorenzo che esulta
+    R(0,138,96,12,'#0b0816'); R(0,138,96,1,'#3a2a50');
+    const lx=34, ly=138-19*3+ (Math.floor(el*6)%2);
+    drawSprite(LORE_ROWS,LORE_PAL,lx,ly,3,false);
+    R(lx-5,ly+11*3-24,7,26,'#000'); R(lx-4,ly+11*3-23,5,24,LORE_PAL.J); R(lx-5,ly+11*3-29,7,6,'#000'); R(lx-4,ly+11*3-28,5,5,LORE_PAL.S);
+    R(lx+48-2,ly+11*3,7,22,'#000'); R(lx+48-1,ly+11*3,5,20,LORE_PAL.J);
+    // titolo
+    if(el>0.7){
+      const vis = el<1.4 ? (Math.floor(el*10)%2) : 1;
+      if(vis){
+        R(70,8,180,40,'#000'); R(72,10,176,36,C.gold); R(74,12,172,32,C.black);
+        T('$LORE È QUOTATO!',160,17,10,C.gold,'Press Start 2P','center');
+        T('7.11.2026 · 14:30 · NEW YORK',160,32,11,C.white,'VT323','center');
+      }
+    }
+    // flash iniziale
+    if(el<0.6){ g.globalAlpha=1-el/0.6; R(0,0,W,H,'#fff'); g.globalAlpha=1; }
+    if(Math.random()<dt*3.2) launch();
+  }
+
+  // ---------- intervista ----------
+  const INTERVIEW=[
+    ['GIORNALISTA','In diretta dal Nasdaq con il Dottor Monteleone. Che effetto fa vedere $LORE sul ticker?'],
+    ['LORENZO','Indescrivibile. Anni di studio, e oggi suono la campanella.'],
+    ['GIORNALISTA','La sua tesi sulla growth swing methodology: è questa la ricetta?'],
+    ['LORENZO','Diciamo che i numeri parlano da soli. Guardate il grafico.'],
+    ['GIORNALISTA','Chi sarà il suo primo investitore?'],
+    ['LORENZO','Ho un\'idea precisa... dovrebbe arrivare un ordine a momenti.'],
+    ['GIORNALISTA','Aspetti, ci dicono dalla regia... BREAKING NEWS!'],
+  ];
+  let acc2=0; const ivStart=[]; INTERVIEW.forEach(l=>{ ivStart.push(acc2); acc2+=1.4+l[1].length*0.042; });
+  const IV_TOTAL=acc2+1.6;
+  function wrap(text,maxW,size){
+    g.font=`${size}px "VT323"`; const words=text.split(' '), lines=[]; let cur='';
+    words.forEach(w=>{ const t=cur?cur+' '+w:w; if(g.measureText(t).width>maxW && cur){lines.push(cur);cur=w}else cur=t; }); if(cur) lines.push(cur); return lines;
+  }
+  function drawInterview(dt,el){
+    // studio
+    R(0,0,W,H,'#0c1224');
+    R(14,8,292,112,'#000'); 
+    const sky=g.createLinearGradient(0,10,0,118); sky.addColorStop(0,'#0a0620'); sky.addColorStop(1,'#2a1446');
+    g.fillStyle=sky; g.fillRect(16,10,288,108);
+    nycBack.forEach(b=>{ const x=16+b.x*0.9; if(x<300) R(x,118-b.h*0.8,Math.min(b.w*0.9,304-x),b.h*0.8,'#1a1430'); });
+    nycFront.forEach(b=>{ const x=16+b.x*0.9; if(x<300){ R(x,118-b.h*0.7,Math.min(b.w*0.9,304-x),b.h*0.7,'#120e22'); } });
+    g.save(); g.beginPath(); g.rect(16,10,288,108); g.clip();
+    updFireworks(dt); if(Math.random()<dt*1.2) { launch(); rockets[rockets.length-1].ty=20+Math.random()*30; }
+    g.restore();
+    for(let x=16;x<304;x+=72) R(x,10,2,108,'#1b2236');
+    R(16,62,288,2,'#1b2236');
+    // schermo in studio
+    R(126,16,68,28,'#000'); R(128,18,64,24,'#081018'); T('$LORE ▲',160,19,11,C.green,'VT323','center'); T((state.price).toFixed(2),160,29,11,C.gold,'VT323','center');
+    // pavimento
+    R(0,120,W,60,'#141b30'); for(let x=0;x<W;x+=20) R(x,120,1,60,'#1b2440');
+    // chi parla
+    let idx=0; for(let i=0;i<INTERVIEW.length;i++) if(el>=ivStart[i]) idx=i;
+    const [who,txt]=INTERVIEW[idx];
+    const typing = (el-ivStart[idx])*24 < txt.length;
+    const mouth = Math.floor(el*8)%2===0;
+    drawSprite(HOST_ROWS,HOST_PAL,52,66,3, !(who==='GIORNALISTA' && typing && mouth));
+    drawSprite(LORE_ROWS,LORE_PAL,214,62,3, !(who==='LORENZO' && typing && mouth));
+    // braccio con microfono
+    const toL = who!=='GIORNALISTA';
+    const mx = toL?188:118;
+    R(96,100,mx-96,6,'#000'); R(96,101,mx-96,4,HOST_PAL.J); R(mx-2,99,6,7,'#000'); R(mx-1,100,4,5,HOST_PAL.S);
+    R(mx+2,94,3,10,'#333'); R(mx,86,7,9,'#000'); R(mx+1,87,5,7,'#555'); R(mx-1,94,9,6,C.red); T('8B',mx+3,94,7,C.white,'VT323','center');
+    // loghi
+    R(6,6,74,12,C.red); T('8-BIT BUSINESS NEWS',43,7,10,C.white,'VT323','center');
+    R(82,6,62,12,'#000'); if(Math.floor(el*2)%2) R(85,10,4,4,C.red); T('LIVE · NASDAQ',116,7,10,C.white,'VT323','center');
+    // sottopancia
+    R(0,122,W,46,'#000');
+    R(4,124,24,10,C.red); T('LIVE',16,124,10,C.white,'VT323','center');
+    R(28,124,288,10,C.gold); T('DOTT. LORENZO MONTELEONE · CEO DI $LORE · NEO-DOTTORE',32,124,10,C.black);
+    R(4,136,312,30,'#0b0f14');
+    const shown = txt.slice(0,Math.floor((el-ivStart[idx])*24));
+    T(who+':',8,137,10,who==='LORENZO'?C.gold:C.cyan);
+    wrap(shown,300,11).slice(0,2).forEach((ln,i)=>T(ln,8,146+i*9,11,C.white));
+    drawTape(el);
+    // breaking news
+    if(el>ivStart[INTERVIEW.length-1]+1.2){
+      if(Math.floor(el*5)%2){ R(0,64,W,30,'#000'); R(0,66,W,26,C.red); T('BREAKING: ORDINE IN ARRIVO SU $LORE',160,70,9,C.white,'Press Start 2P','center'); T('primo investitore in linea',160,81,11,C.white,'VT323','center'); }
+    }
+  }
+
+  // ---------- state & story ----------
+  const state={scene:'desk',sceneT:0,phase:'pre',price:100,press:0,momentum:3,tickN:0,buyMarks:[],t:0,extra:0};
+  const buyBtn=document.getElementById('buy'), replayBtn=document.getElementById('replay');
+  const ticket=document.getElementById('ticket'), toast=document.getElementById('toast');
+  let timers=[];
+  const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
+
+  function press(){
+    state.press=0.18; state.buyMarks.push(state.tickN); kaching();
+    floatText(['BUY!','+$LORE','ALL-IN','BUY!!'][Math.floor(Math.random()*4)], C.green);
+  }
+
+  const orderEl=document.getElementById('order'), offerEl=document.getElementById('offer');
+  const acceptBtn=document.getElementById('accept'), refuseBtn=document.getElementById('refuse');
+  const OFFERS=['110 e lode','110 e lode + un giro di shot','110 e lode + shot + cena offerta','110 e lode + shot + cena + discorso alla festa'];
+  const NO=[
+    '«Non vendo. Neanche per un 110 e lode bis.»',
+    '«Richiesta respinta. Sono un investitore di lungo periodo.»',
+    '«Le azioni $LORE restano qui. Prova con un\'altra cordata.»',
+    '«Ho messo le azioni in cassaforte e ho perso la combinazione.»',
+    '«Rilancio respinto: queste le lascio in eredità.»'
+  ];
+  let mode='bell', refusals=0, buybacks=0;
+  function showToast(html,ms=3500){ toast.innerHTML=html; toast.classList.add('show'); clearTimeout(state.tt); state.tt=setTimeout(()=>toast.classList.remove('show'),ms); }
+
+  function story(){
+    timers.forEach(clearTimeout); timers=[];
+    Object.assign(state,{phase:'pre',price:100,momentum:3,buyMarks:[],extra:0});
+    candles.length=0; for(let i=0;i<24;i++) candles.push({o:100,c:100,h:100.4,l:99.6});
+    ticket.classList.remove('show'); orderEl.classList.remove('show'); toast.classList.remove('show'); resetChapters();
+    refusals=0; buybacks=0; offerEl.textContent=OFFERS[0]; refuseBtn.style.display=''; refuseBtn.style.transform='';
+    cine.forEach(clearTimeout); cine=[]; state.scene='desk'; skipBtn.hidden=true; rockets.length=0; sparks.length=0;
+    mode='bell'; buyBtn.textContent='🔔 SUONA LA CAMPANELLA'; buyBtn.className='btn gold'; buyBtn.disabled=false; replayBtn.disabled=true;
+    say('<span class="who">LMSE ›</span> 14:29:59 · Dottor Monteleone, $LORE è pronto alla quotazione. Suona la campanella.');
+  }
+
+  const skipBtn=document.getElementById('skip');
+  let cine=[];
+  const cat=(ms,fn)=>cine.push(setTimeout(fn,ms));
+  function setScene(sc){ state.scene=sc; state.sceneT=0; }
+  function ringBell(){
+    buyBtn.disabled=true; replayBtn.disabled=true;
+    bell(); setScene('nyc'); skipBtn.hidden=false;
+    for(let i=0;i<5;i++) setTimeout(launch,i*120);
+    document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
+    say('<span class="ok">DING DING DING!</span> Sei proclamato. $LORE è ufficialmente quotato.');
+    cat(6500,()=>{ setScene('interview'); say('<span class="who">8-BIT NEWS ›</span> In diretta: la prima intervista del Dottor Monteleone.'); });
+    cat(6500+IV_TOTAL*1000,toDesk);
+  }
+  function toDesk(){
+    cine.forEach(clearTimeout); cine=[]; skipBtn.hidden=true;
+    setScene('desk'); state.phase='wait'; kaching();
+    say('<span class="who">LMSE ›</span> ⚡ Ordine in arrivo al millisecondo 001... è Matteo. Accetti?');
+    orderEl.classList.add('show'); setTimeout(()=>orderEl.scrollIntoView({behavior:'smooth',block:'center'}),200);
+  }
+  skipBtn.onclick=toDesk;
+
+  refuseBtn.onclick=()=>{
+    refusals++;
+    if(refusals<OFFERS.length){
+      offerEl.textContent=OFFERS[refusals]; press(); state.phase='buy'; state.momentum+=2;
+      setTimeout(()=>{ if(state.phase==='buy') state.phase='wait' },700);
+      say('<span class="who">MATTEO ›</span> «Rilancio.» Nuova offerta: '+OFFERS[refusals]+'.');
+      refuseBtn.style.transform=`translate(${(Math.random()-.5)*160}px,${(Math.random()-.5)*20}px) scale(${1-refusals*.2})`;
+    } else {
+      refuseBtn.style.display='none'; beep(220,.4,'sawtooth',.05);
+      say('<span class="who">CONSOB ›</span> Il pulsante RIFIUTA è stato rimosso per manifesta inutilità.');
+    }
+  };
+
+  acceptBtn.onclick=()=>{
+    orderEl.classList.remove('show');
+    document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
+    state.phase='buy'; say('<span class="who">MATTEO ›</span> «Compra. Tutto. Subito.»');
+    [100,350,600,850,1100,1350,1600].forEach(ms=>at(ms,()=>{press(); state.momentum+=1.3}));
+    at(2300,executed);
+  };
+  function executed(){
+    state.phase='done'; burst(90); bell(); kaching();
+    document.getElementById('finalPrice').textContent=OFFERS[Math.min(refusals,OFFERS.length-1)];
+    say('<span class="ok">ORDINE ESEGUITO.</span> Hai il tuo primo azionista. Congratulazioni, Dottore!');
+    ticket.classList.add('show'); setTimeout(()=>ticket.scrollIntoView({behavior:'smooth',block:'center'}),100);
+    setTimeout(()=>document.getElementById('next').classList.add('show'),1200);
+    mode='buyback'; buyBtn.textContent='RIACQUISTA LE AZIONI'; buyBtn.className='btn ghost'; buyBtn.disabled=false; replayBtn.disabled=false;
+  }
+
+  buyBtn.onclick=()=>{
+    if(mode==='bell') return ringBell();
+    buybacks++;
+    if(buybacks<=NO.length){
+      say('<span class="who">MATTEO ›</span> '+NO[buybacks-1]);
+      press(); state.phase='buy'; state.momentum+=1.5;
+      clearTimeout(state.back); state.back=setTimeout(()=>{ if(state.phase==='buy') state.phase='done' },800);
+    }
+    if(buybacks===NO.length){
+      state.phase='halt'; buyBtn.disabled=true; beep(220,.5,'sawtooth',.06);
+      showToast('OPA RESPINTA<br>Matteo non vende.<br>Rassegnati, Dottore.',4000);
+      setTimeout(()=>{ state.phase='done'; buybacks=0; buyBtn.disabled=false },4000);
+    }
+  };
+  replayBtn.onclick=story;
+
+  // ---------- capitoli extra ----------
+  const chEl=document.getElementById('chapter'), nextWrap=document.getElementById('next');
+  const BASE_TAPE=tape;
+  const picks={};
+  function headline(h){ tape+='  '+h+'  ·'; }
+  function bump(n=3){ press(); state.phase='buy'; state.momentum+=n; setTimeout(()=>{ if(state.phase==='buy') state.phase='done' },900); }
+  function resetChapters(){ chEl.classList.remove('show'); chEl.innerHTML=''; nextWrap.classList.remove('show'); tape=BASE_TAPE; for(const k in picks) delete picks[k]; }
+
+  const STEPS=[
+    { tag:'CAPITOLO 2 · 1/5', title:'ASSEMBLEA DEGLI AZIONISTI', key:'dividendo',
+      q:'Ordine del giorno: il primo dividendo di $LORE. Presenti: Matteo (100% dei voti). <i>Cosa distribuisci?</i>',
+      opts:[
+        ['Una partita a golf insieme','Matteo approva con il 100% dei voti e prenota subito il tee time. Chi perde paga il pranzo alla club house.','$LORE PAGA IL DIVIDENDO SUL GREEN: TEE TIME PRENOTATO'],
+        ['Un giro di shot','Matteo vota SÌ con il 100% dei voti. Dividendo liquido, in tutti i sensi.','$LORE STACCA UN DIVIDENDO IN SHOT'],
+      ]},
+    { tag:'CAPITOLO 3 · 2/5', title:'CONFERENZA STAMPA', key:'futuro',
+      q:'<b>Il Sole 24 Pixel</b> <i>— «Dottore, e adesso cosa farà?»</i>',
+      opts:[
+        ['Si lavora','Il mercato apprezza la disciplina. Matteo compra altre azioni.','MONTELEONE: «SI LAVORA». ANALISTI ENTUSIASTI'],
+        ['Un master','Gli analisti già parlano di un secondo collocamento.','IN ARRIVO IL FOLLOW-ON: $LORE PUNTA AL MASTER'],
+        ['Vacanza','Il settore turismo fa +12% in pochi minuti.','MONTELEONE IN VACANZA: TURISMO +12%'],
+        ['Prima la festa','Gli alcolici volano. Matteo prenota il tavolo.','PRIMA LA FESTA: ALCOLICI IN FORTE RIALZO'],
+      ]},
+    { tag:'CAPITOLO 3 · 3/5', title:'CONFERENZA STAMPA', key:'dedica',
+      q:'<b>Bloomberg 8-bit</b> <i>— «A chi dedica questa laurea?»</i>',
+      opts:[
+        ['Alla famiglia','Standing ovation in sala stampa. Il titolo sale per rispetto.','LA DEDICA ALLA FAMIGLIA COMMUOVE LA BORSA'],
+        ['Agli amici','Gli amici chiedono un dividendo extra. Respinto con eleganza.','DEDICA AGLI AMICI: CHIESTO DIVIDENDO EXTRA'],
+        ['Al barista sotto l\'università','Il bar annuncia un dividendo straordinario in spritz. Matteo compra azioni del bar.','DEDICA AL BARISTA: IL BAR DELL\'UNIVERSITÀ VA IN BORSA'],
+        ['Al mio primo azionista','Matteo si commuove e compra tutto quello che è rimasto.','DEDICA AL PRIMO AZIONISTA: MATTEO IN LACRIME'],
+      ]},
+    { tag:'CAPITOLO 3 · 4/5', title:'CONFERENZA STAMPA', key:'tesi',
+      q:'<b>MF Retro</b> <i>— «La tesi in una frase?»</i>',
+      opts:[
+        ['Growth swing methodology','Silenzio in sala. Nessuno ha capito, tutti prendono appunti.','GROWTH SWING METHODOLOGY: LE BUSINESS SCHOOL LA COPIANO'],
+        ['African kids','I giornalisti si guardano. Il titolo sale lo stesso, sulla fiducia.','«AFRICAN KIDS»: LA RISPOSTA CHE HA SPIAZZATO IL NASDAQ'],
+        ['Tech nerd','Confermato: il CEO è un tech nerd. Gli investitori festeggiano.','IL CEO DI $LORE È UN TECH NERD. RATING ALZATO'],
+        ['Non me la ricordo già più','Onestà premiata. Il titolo sale lo stesso.','IL DOTTORE HA GIÀ RIMOSSO LA TESI. TITOLO SU'],
+      ]},
+    { tag:'CAPITOLO 4 · 5/5', title:'IL GONG DI CHIUSURA', key:'gong',
+      q:'Fine della prima seduta. <i>Come chiudi la giornata?</i>',
+      opts:[
+        ['Suono il gong','GONG! Seduta chiusa con un rialzo mai visto.','SEDUTA CHIUSA: $LORE MIGLIOR DEBUTTO DELL\'ANNO'],
+        ['Lancio il tocco in aria','Il tocco vola sopra la sala contrattazioni. Coriandoli ovunque.','IL TOCCO VOLA SUL PARTERRE, PANICO DA COLLEZIONISTI'],
+        ['Brindisi con l\'azionista','Matteo era già pronto con due bicchieri.','BRINDISI EMITTENTE-AZIONISTA, SOLIDITÀ CONFERMATA'],
+        ['Spengo il telefono e dormo 14 ore','Seduta chiusa, telefono pure. I mercati restano senza CEO fino a domani pomeriggio.','IL DOTTORE È IN LETARGO: MERCATI SENZA GUIDA'],
+      ]},
+  ];
+
+  function showStep(i){
+    if(i>=STEPS.length) return showReport();
+    const st=STEPS[i];
+    chEl.innerHTML=`<div class="tag">${st.tag}</div><h2>${st.title}</h2><div class="q">${st.q}</div>
+      <div class="choices">${st.opts.map((o,k)=>`<button class="btn" data-k="${k}">${o[0]}</button>`).join('')}</div>
+      <div class="reply"></div><div class="go"></div>`;
+    chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
+    chEl.scrollIntoView({behavior:'smooth',block:'center'});
+    say('<span class="who">LMSE ›</span> '+st.title.toLowerCase().replace(/^./,c=>c.toUpperCase())+'. Tocca a te, Dottore.');
+    chEl.querySelectorAll('.choices .btn').forEach(b=>b.onclick=()=>{
+      const o=st.opts[+b.dataset.k]; picks[st.key]=o[0];
+      chEl.querySelectorAll('.choices .btn').forEach(x=>{x.disabled=true; if(x!==b) x.style.opacity=.35});
+      b.style.background='var(--gold)';
+      const r=chEl.querySelector('.reply'); r.innerHTML='<b>▲ '+o[2]+'</b><br>'+o[1]; r.classList.add('show');
+      headline(o[2]); bump(st.key==='dedica'&&+b.dataset.k===3?8:3);
+      if(st.key==='gong'){ bell(); burst(120); } else burst(25);
+      say('<span class="ok">FLASH ›</span> '+o[2]);
+      const go=chEl.querySelector('.go');
+      go.innerHTML=`<button class="btn gold">${i===STEPS.length-1?'LEGGI IL REPORT ▶':'AVANTI ▶'}</button>`;
+      go.firstChild.onclick=()=>showStep(i+1);
+    });
+  }
+
+  function showReport(){
+    const target = picks.dedica==='Al mio primo azionista' ? '∞ + 1' : '∞';
+    chEl.innerHTML=`<div class="tag">EQUITY RESEARCH · MATTEO BRAMBILLA CAPITAL</div>
+      <h2>$LORE · INITIATION OF COVERAGE</h2>
+      <div class="report">
+        <div class="big">
+          <div class="kpi"><small>Rating</small><span>STRONG BUY</span></div>
+          <div class="kpi"><small>Target price</small><span>${target}</span></div>
+          <div class="kpi"><small>Prezzo IPO</small><span>110L</span></div>
+        </div>
+        <h4>PUNTI DI FORZA</h4>
+        <ul>
+          <li>Management neo-dottore, padre della growth swing methodology</li>
+          <li>Politica dei dividendi: <b>${picks.dividendo||'—'}</b></li>
+          <li>Guidance per il prossimo anno: <b>${picks.futuro||'—'}</b></li>
+          <li>Visione strategica in una frase: <b>«${picks.tesi||'—'}»</b></li>
+        </ul>
+        <h4>RISCHI</h4>
+        <ul>
+          <li>La festa potrebbe pesare sulla produttività del lunedì successivo</li>
+          <li>Il primo azionista ha dichiarato che non venderà mai</li>
+          <li>Dedica ufficiale: <b>${picks.dedica||'—'}</b> (gli altri stakeholder sono avvisati)</li>
+        </ul>
+        <h4>CONCLUSIONE</h4>
+        Titolo raro, fondamentali solidi, debutto da record. Manteniamo la posizione per sempre.
+        <div class="end">CONGRATULAZIONI, DOTTORE 🎓<br>— IL TUO PRIMO AZIONISTA</div>
+      </div>
+      <div class="go"><button class="btn ghost" id="again">RICOMINCIA DALL'IPO</button></div>`;
+    chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
+    chEl.scrollIntoView({behavior:'smooth',block:'start'});
+    bell(); burst(100); bump(6);
+    say('<span class="ok">REPORT PUBBLICATO ›</span> Rating STRONG BUY, target price '+target+'.');
+    document.getElementById('again').onclick=()=>{ window.scrollTo({top:0,behavior:'smooth'}); story(); };
+  }
+  document.getElementById('nextBtn').onclick=()=>{ nextWrap.classList.remove('show'); showStep(0); };
+  document.getElementById('go').onclick=()=>{
+    try{ ac=new (window.AudioContext||window.webkitAudioContext)() }catch(e){}
+    document.getElementById('start').style.display='none'; story();
+  };
+
+  // ---------- loop ----------
+  let last=performance.now(), acc=0;
+  function frame(now){
+    const dt=Math.min(.05,(now-last)/1000); last=now; state.t+=dt;
+    acc+=dt; const step = state.phase==='buy'?0.12:0.35;
+    while(acc>step){acc-=step; state.tickN++; tickChart();}
+    if(state.press>0) state.press-=dt;
+
+    g.setTransform(S,0,0,S,0,0);
+    state.sceneT+=dt;
+    if(state.scene==='nyc'){ drawNYC(dt,state.sceneT); drawParts(dt); requestAnimationFrame(frame); return; }
+    if(state.scene==='interview'){ drawInterview(dt,state.sceneT); requestAnimationFrame(frame); return; }
+    // cielo
+    const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,'#070b1a'); sky.addColorStop(1,'#1b2a4a');
+    g.fillStyle=sky; g.fillRect(0,0,W,H);
+    for(let i=0;i<40;i++){ const sx=(i*73)%W, sy=(i*37)%60; if((Math.floor(state.t*2)+i)%7) R(sx,sy,1,1,'#3a4a70'); }
+    buildings.forEach(b=>{ R(b.x,H-b.h,b.w,b.h,b.shade); b.wins.forEach(w=>{ if(w.on) R(w.x,w.y,2,3,w.c+'aa'); }); });
+    if(Math.random()<.05){ const b=buildings[Math.floor(Math.random()*buildings.length)]; const w=b.wins[Math.floor(Math.random()*b.wins.length)]; if(w) w.on=!w.on; }
+    billboards.forEach((b,i)=>{ const on=(Math.floor(state.t*1.5)+i)%4!==0; R(b.x-1,b.y-1,b.w+2,b.h+2,'#000'); R(b.x,b.y,b.w,b.h,on?b.c:'#222'); });
+    T('$LORE',207,25,9,'#000','VT323','center');
+
+    R(232,4,84,11,'#000'); R(233,5,82,9,C.redD);
+    if(Math.floor(state.t*2)%2) R(236,8,3,3,C.red);
+    T('LIVE · AZIONISTA #1',277,5,9,C.white,'VT323','center');
+    drawMonitor(state.t);
+    drawMatteo(state.t);
+    drawDesk();
+    drawParts(dt);
+    drawFloats(dt);
+    drawTape(state.t);
+    if(state.phase==='buy' && Math.random()<.15) burst(4);
+    requestAnimationFrame(frame);
+  }
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>requestAnimationFrame(frame));
+})();
+</script>
+</body>
+</html>

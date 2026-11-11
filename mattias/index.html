@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#0B0F14" />
-<title>DEPLOY COMPLETATO · MATTIAS vNEXT</title>
-<meta name="description" content="Una nuova versione di Mattias è in produzione. Buon compleanno!" />
-<meta property="og:title" content="DEPLOY COMPLETATO · MATTIAS vNEXT" />
-<meta property="og:description" content="Una nuova versione di Mattias è in produzione. Buon compleanno!" />
+<title>DEPLOY COMPLETE · MATTIAS vNEXT</title>
+<meta name="description" content="A new version of Mattias is live in production. Happy birthday!" />
+<meta property="og:title" content="DEPLOY COMPLETE · MATTIAS vNEXT" />
+<meta property="og:description" content="A new version of Mattias is live in production. Happy birthday!" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
@@ -100,63 +100,62 @@
 </style>
 </head>
 <body>
-  <div class="brand">MATTIAS.OS · TERMINALE DI SISTEMA · vNEXT<br><span>UTENTE: MATTIAS SCHULBACH · ADMIN DI TUTTO</span></div>
+  <div class="brand">MATTIAS.OS · SYSTEM TERMINAL · vNEXT<br><span>USER: MATTIAS SCHULBACH · ADMIN OF EVERYTHING</span></div>
 
   <div class="wrap">
     <div class="screen">
       <canvas id="c" width="1280" height="720"></canvas>
       <div class="crt"></div>
-      <button class="btn ghost skip" id="skip" hidden>SALTA ▶</button>
+      <button class="btn ghost skip" id="skip" hidden>SKIP ▶</button>
       <div class="start" id="start">
-        <h1>MATTIAS, C'È UN AGGIORNAMENTO PER TE</h1>
-        <p>Una nuova versione è pronta. Il deploy lo lanci tu.</p>
-        <button class="btn gold" id="go">AVVIA IL SISTEMA</button>
+        <h1>MATTIAS, AN UPDATE IS WAITING FOR YOU</h1>
+        <p>A new version is ready. You get to push the deploy.</p>
+        <button class="btn gold" id="go">BOOT SYSTEM</button>
       </div>
     </div>
 
     <div class="dialog" id="dialog"><span class="caret"></span></div>
 
     <div class="controls">
-      <button class="btn gold" id="buy" disabled>🚀 LANCIA IL DEPLOY</button>
-      <button class="btn ghost" id="replay" disabled>RIVEDI</button>
+      <button class="btn gold" id="buy" disabled>🚀 START DEPLOY</button>
+      <button class="btn ghost" id="replay" disabled>REPLAY</button>
     </div>
 
     <div class="order" id="order">
-      <h3>⚡ PULL REQUEST #1 IN ARRIVO</h3>
-      <div class="row"><span>Autore</span><span>Il team</span></div>
-      <div class="row"><span>Branch</span><span>feature/compleanno → main</span></div>
-      <div class="row"><span>Modifiche</span><span id="offer">+1 anno, +∞ auguri</span></div>
+      <h3>⚡ INCOMING PULL REQUEST #1</h3>
+      <div class="row"><span>Author</span><span>The team</span></div>
+      <div class="row"><span>Branch</span><span>feature/birthday → main</span></div>
+      <div class="row"><span>Changes</span><span id="offer">+1 year, +∞ wishes</span></div>
       <div class="row"><span>Reviewer</span><span>Mattias Schulbach</span></div>
-      <div class="row"><span>Test</span><span>✅ tutti verdi</span></div>
+      <div class="row"><span>Tests</span><span>✅ all green</span></div>
       <div class="btns">
         <button class="btn" id="accept">MERGE</button>
-        <button class="btn red" id="refuse">RICHIEDI MODIFICHE</button>
+        <button class="btn red" id="refuse">REQUEST CHANGES</button>
       </div>
     </div>
 
     <div class="ticket" id="ticket">
-      <div class="stamp">RILASCIATO</div>
+      <div class="stamp">SHIPPED</div>
       <h2>RELEASE NOTES · MATTIAS vNEXT</h2>
-      <div class="sub">Build stabile · in produzione da oggi</div>
+      <div class="sub">Stable build · live in production as of today</div>
       <table>
-        <tr><td>Versione</td><td>quella di prima, +1</td></tr>
-        <tr><td>Ruolo</td><td>quello che fa funzionare tutto</td></tr>
-        <tr><td>Contenuto della PR</td><td class="up" id="finalPrice">+1 anno, +∞ auguri</td></tr>
-        <tr><td>Nuove feature</td><td>saggezza +1, pazienza +1</td></tr>
-        <tr><td>Bug risolti</td><td>i lunedì mattina (in parte)</td></tr>
-        <tr><td>Performance</td><td class="up">invariate (ottime) ▲</td></tr>
-        <tr><td>Breaking changes</td><td>nessuno</td></tr>
-        <tr><td>Supporto</td><td>LTS · lunghissimo termine</td></tr>
+        <tr><td>Version</td><td>the previous one, +1</td></tr>
+        <tr><td>Role</td><td>the one who keeps everything running</td></tr>
+        <tr><td>PR contents</td><td class="up" id="finalPrice">+1 year, +∞ wishes</td></tr>
+        <tr><td>New features</td><td>wisdom +1, patience +1</td></tr>
+        <tr><td>Bugs fixed</td><td>Monday mornings (partially)</td></tr>
+        <tr><td>Performance</td><td class="up">unchanged (excellent) ▲</td></tr>
+        <tr><td>Breaking changes</td><td>none</td></tr>
+        <tr><td>Support</td><td>LTS · very long term</td></tr>
       </table>
       <div class="note">
-        <b>MESSAGGIO DAL TEAM</b>
-        Grazie per tenere in piedi tutta la parte tech, anche quella che non si vede.
-        Se qualcosa funziona, di solito c'è dietro la tua mano.<br><br>
-        Buon compleanno, Mattias! 🎂
+        <b>A MESSAGE FOR YOU</b>
+        Thanks for always being yourself, and for all the support you give.<br><br>
+        Happy birthday, Mattias! 🎂
       </div>
-      <div class="sign">— Matteo e tutto il team</div>
+      <div class="sign">— Matteo and the whole team</div>
     </div>
-    <div class="next" id="next"><button class="btn gold" id="nextBtn">CONTINUA ▶</button></div>
+    <div class="next" id="next"><button class="btn gold" id="nextBtn">CONTINUE ▶</button></div>
     <div class="chapter" id="chapter"></div>
   </div>
 
@@ -195,7 +194,7 @@
   }
   const billboards = [{x:196,y:22,w:22,h:14,c:C.pink},{x:296,y:30,w:18,h:22,c:C.cyan},{x:186,y:44,w:12,h:18,c:C.gold}];
 
-  // ---------- sprite (Mattias, in felpa) ----------
+  // ---------- sprite (Mattias, hoodie) ----------
   const PAL = {H:'#4a2e1a',h:'#6b4528',S:'#f1c27d',s:'#d9a066',K:'#0b0f14',k:'#2c3e66',W:'#f4f4f4',T:C.green,t:C.greenD,J:'#24495a',j:'#173341',M:'#7a1c20',m:'#f4f4f4'};
   const BODY = [
     '....HHHHHHHH....',
@@ -218,7 +217,7 @@
     'JJjJJJTTTtJJJJjJ',
     'JJjJJJJJJJJJJjJJ',
   ];
-  // cappellino da festa
+  // party hat
   function drawHat(cx,topY,el){
     const cols=[C.pink,C.gold];
     for(let r=0;r<14;r++){ const w=2+Math.floor(r*0.9)*2; R(cx-w/2-1,topY-14+r,w+2,1,'#000'); }
@@ -234,19 +233,17 @@
     BODY.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
       if(ch==='.') return;
       let col = PAL[ch];
-      if((ch==='k') && state.price>120) col = C.green;           // occhiali che riflettono il terminale
+      if((ch==='k') && state.price>120) col = C.green;
       R(MX+rx*PX, MY+ry*PX - (ry<12?bob:0), PX, PX, col);
     }));
     if(state.hat) drawHat(MX+24, MY-bob+2, t);
-    // braccio destro (lato sinistro schermo) che preme DEPLOY
     const down = state.press>0;
     const armY = MY+12*PX, handY = down ? 111 : 106;
     R(MX-4, armY, 8, handY-armY+9, '#000');
     R(MX-3, armY, 6, handY-armY, PAL.J);
     R(MX-3, armY, 2, handY-armY, PAL.j);
-    R(MX-4, handY, 8, 5, PAL.j);       // polsino
-    R(MX-3, handY+3, 7, 5, PAL.S);     // mano
-    // braccio sinistro appoggiato
+    R(MX-4, handY, 8, 5, PAL.j);
+    R(MX-3, handY+3, 7, 5, PAL.S);
     const ax = MX+16*PX-3;
     R(ax-2, armY, 9, 117-armY, '#000');
     R(ax, armY, 6, 114-armY, PAL.J);
@@ -254,7 +251,7 @@
     R(ax-1, 112, 8, 4, PAL.S);
   }
 
-  // ---------- grafico ----------
+  // ---------- chart ----------
   const candles = [];
   for(let i=0;i<24;i++) candles.push({o:100,c:100,h:100.4,l:99.6});
   function tickChart(){
@@ -280,7 +277,7 @@
     const valStr = state.phase==='halt' ? 'LOCKED' : state.price.toFixed(0)+'%';
     T(valStr, x+w-5, y+2, 16, state.phase==='halt'?C.red:(up?C.green:C.red), 'VT323','right');
     T((pct>=0?'▲ +':'▼ ')+pct.toFixed(1)+'%', x+w-5, y+15, 10, up?C.green:C.red,'VT323','right');
-    const label = {pre:'IN ATTESA DI DEPLOY', wait:'PR IN REVIEW', buy:'DEPLOY IN CORSO...', done:'DEPLOY OK · vNEXT', halt:'ROLLBACK BLOCCATO'}[state.phase];
+    const label = {pre:'WAITING FOR DEPLOY', wait:'PR IN REVIEW', buy:'DEPLOYING...', done:'DEPLOY OK · vNEXT', halt:'ROLLBACK BLOCKED'}[state.phase];
     T(label, x+5, y+15, 10, state.phase==='halt'?C.red:C.muted);
     for(let gy=y+32; gy<y+h-4; gy+=12) R(x+4,gy,w-8,1,'#132036');
     const vis = candles; let mn=Infinity,mx=-Infinity;
@@ -301,12 +298,12 @@
     });
     if(state.phase==='halt' && Math.floor(t*3)%2===0){
       R(x+20,y+50,w-40,26,C.redD); R(x+22,y+52,w-44,22,C.red);
-      T('ACCESSO NEGATO', x+w/2, y+53, 12, C.white,'VT323','center');
-      T('l\'età è in sola lettura', x+w/2, y+63, 10, C.white,'VT323','center');
+      T('ACCESS DENIED', x+w/2, y+53, 12, C.white,'VT323','center');
+      T('age is read-only', x+w/2, y+63, 10, C.white,'VT323','center');
     }
   }
 
-  // ---------- scrivania, papera, torta ----------
+  // ---------- desk, duck, cake ----------
   const cakeC=[true,true,true,true,true];
   function drawCake(t){
     const x=278,y=98;
@@ -327,13 +324,12 @@
   }
   function drawDesk(){
     R(0,112,W,56,'#2b1d14'); R(0,112,W,3,'#5a3d28'); R(0,115,W,1,'#1a110b');
-    // pulsante DEPLOY
     const pressed = state.press>0;
     R(212,116,26,7,'#111'); R(213,117,24,5,'#333');
     R(216, pressed?115:112, 18, pressed?3:5, C.red);
     R(216, pressed?115:112, 18, 1, '#ff9da0');
     R(204,128,42,10,C.gold); R(205,129,40,8,C.goldD); T('DEPLOY',225,128,10,C.black,'VT323','center');
-    // paperella da debug
+    // rubber debugging duck
     R(193,104,12,8,'#000'); R(194,105,10,7,'#ffd23f'); R(196,100,7,6,'#000'); R(197,101,5,5,'#ffd23f');
     R(201,102,1,1,'#000'); R(202,103,3,2,'#ff8a00');
     if(state.cake) drawCake(state.t);
@@ -342,13 +338,12 @@
       R(286,104,11,3,C.green); T('</>',287,104,8,C.black);
       if(Math.floor(state.t*2)%2) {R(289,95,1,3,'#556'); R(292,93,1,4,'#556');} else {R(290,94,1,3,'#556'); R(293,95,1,3,'#556');}
     }
-    // targhetta
     R(36,140,124,16,'#14100c'); R(37,141,122,14,C.goldD); R(38,142,120,12,'#d8b24a');
     T('MATTIAS SCHULBACH · ADMIN', 98, 143, 11, '#2b1d14','VT323','center');
   }
 
-  // ---------- nastro scorrevole ----------
-  let tape = '  MATTIAS vNEXT ▲ IN PRODUZIONE  ·  BUON COMPLEANNO MATTIAS  ·  ADMIN DI TUTTO  ·  ZERO BUG NOTI  ·  UPTIME: TUTTA LA VITA  ·  AUGURI DAL TEAM  ·';
+  // ---------- ticker tape ----------
+  let tape = '  MATTIAS vNEXT ▲ LIVE IN PRODUCTION  ·  HAPPY BIRTHDAY MATTIAS  ·  ADMIN OF EVERYTHING  ·  ZERO KNOWN BUGS  ·  UPTIME: A LIFETIME  ·  RAT MAXING: ON  ·  BEST WISHES FROM THE TEAM  ·';
   function drawTape(t){
     R(0,168,W,12,'#000'); R(0,168,W,1,C.gold);
     g.font='11px "VT323"'; const tw = g.measureText(tape).width;
@@ -356,7 +351,7 @@
     for(let k=0;k<3;k++) T(tape, off+k*tw, 169, 11, C.gold);
   }
 
-  // ---------- coriandoli, fumo, scritte ----------
+  // ---------- confetti, smoke, floating text ----------
   const parts=[];
   function burst(n=40){
     const cols=[C.gold,C.green,C.pink,C.cyan,C.white];
@@ -385,7 +380,7 @@
     v.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+when+dur);
     o.connect(v).connect(ac.destination); o.start(ac.currentTime+when); o.stop(ac.currentTime+when+dur+.02);
   }
-  // "Tanti auguri a te" in versione 8-bit
+  // "Happy Birthday" in 8-bit
   function jingle(){
     const q=.3, N=[[392,.75],[392,.25],[440,1],[392,1],[523,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587,1],[523,2]];
     let w=0; N.forEach(([f,d])=>{ beep(f,d*q*.9,'square',.05,w); beep(f/2,d*q*.9,'triangle',.05,w); w+=d*q; });
@@ -394,7 +389,7 @@
   const kaching=()=>{beep(988,.08,'square',.05);beep(1318,.25,'square',.05,.07)};
   const whoosh=()=>{beep(300,.18,'triangle',.06);beep(180,.2,'triangle',.04,.05)};
 
-  // ---------- dialogo ----------
+  // ---------- dialog ----------
   const dlg=document.getElementById('dialog');
   let typing=null;
   function say(html){
@@ -408,7 +403,7 @@
     },22);
   }
 
-  // ---------- sprite generico ----------
+  // ---------- generic sprite ----------
   function drawSprite(rows,pal,x,y,px,talkClosed){
     rows.forEach((row,ry)=>[...row].forEach((ch,rx)=>{ if(ch!=='.') R(x+rx*px-1,y+ry*px-1,px+2,px+2,'#000'); }));
     rows.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
@@ -441,7 +436,7 @@
   ];
   const HOST_PAL={H:'#c9ced6',h:'#9aa1ab',S:'#f1c27d',s:'#d9a066',E:'#0b0f14',M:'#7a1c20',m:'#f4f4f4',J:'#1b2a4a',j:'#0f1a33',W:'#f4f4f4',T:C.gold,t:C.goldD};
 
-  // ---------- fuochi d'artificio ----------
+  // ---------- fireworks ----------
   const rockets=[], sparks=[];
   let noiseBuf=null;
   function pop(){
@@ -463,52 +458,46 @@
       g.globalAlpha=Math.min(1,p.life*1.4); R(p.x,p.y,2,2,p.c); g.globalAlpha=1; }
   }
 
-  // città di notte (livelli)
   const cityBack=[], cityFront=[];
   for(let x=0;x<W;){ const w=10+Math.floor(rnd()*16); cityBack.push({x,w,h:50+Math.floor(rnd()*60)}); x+=w; }
   for(let x=0;x<W;){ const w=14+Math.floor(rnd()*20); const h=30+Math.floor(rnd()*55); const wins=[];
     for(let wy=150-h+4;wy<146;wy+=5) for(let wx=x+2;wx<x+w-2;wx+=4) if(rnd()<.5) wins.push([wx,wy]);
     cityFront.push({x,w,h,wins}); x+=w+2; }
 
-  // ---------- scena: deploy riuscito, festa ----------
+  // ---------- scene: deploy done, party ----------
   function drawParty(dt,el){
     const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,'#0a0620'); sky.addColorStop(1,'#3a1650');
     g.fillStyle=sky; g.fillRect(0,0,W,H);
     for(let i=0;i<50;i++){ const sx=(i*97)%W, sy=(i*41)%90; if((Math.floor(el*3)+i)%9) R(sx,sy,1,1,'#5a4a80'); }
-    // torre-server con antenna
     const tx=150; R(tx+12,8,2,22,'#2a2340'); R(tx+9,30,8,10,'#241d38'); R(tx+5,40,16,16,'#211a34'); R(tx,56,26,94,'#1d1730');
     for(let wy=60;wy<146;wy+=5) for(let wx=tx+3;wx<tx+24;wx+=4) if(((wx*7+wy*3+Math.floor(el*6))>>2)%3) R(wx,wy,2,2,((wx+wy)>>2)%4?'#3bd16f99':'#f5c54299');
     R(tx+12,6,2,2,(Math.floor(el*4)%2)?C.red:'#400');
     cityBack.forEach(b=>R(b.x,150-b.h,b.w,b.h,'#1a1430'));
     updFireworks(dt);
     cityFront.forEach(b=>{ R(b.x,150-b.h,b.w,b.h,'#120e22'); b.wins.forEach(([wx,wy])=>R(wx,wy,2,2,'#f5c54266')); });
-    // maxi schermo LED con barra di avanzamento
     const bx=212,by=78; R(bx-2,by-2,96,34,'#000'); R(bx,by,92,30,'#081018');
     const prog=Math.min(1,el/1.6);
     if(prog<1){
-      T('DEPLOY...',bx+46,by+1,14,C.green,'VT323','center');
+      T('DEPLOYING...',bx+46,by+1,14,C.green,'VT323','center');
       R(bx+6,by+18,80,7,'#1b2a4a'); R(bx+6,by+18,Math.floor(80*prog),7,C.green);
     } else {
       const on=Math.floor(el*3)%2;
       T('MATTIAS',bx+46,by+1,16,on?C.gold:C.green,'VT323','center');
       T('▲ vNEXT · 100% OK',bx+46,by+16,11,C.green,'VT323','center');
     }
-    // fiume con riflessi
     R(0,150,W,30,'#07091a');
     for(let i=0;i<28;i++){ const rx=(i*53+Math.floor(el*20))%W, ry=152+(i*7)%26; R(rx,ry,6+(i%4)*3,1,[C.gold,C.pink,C.cyan,C.green][i%4]+'66'); }
-    // terrazza + Mattias che esulta col cappellino
     R(0,138,96,12,'#0b0816'); R(0,138,96,1,'#3a2a50');
     const lx=34, ly=138-19*3+ (Math.floor(el*6)%2);
     drawSprite(BODY,PAL,lx,ly,3,false);
     drawHat(lx+24,ly+2,el);
     R(lx-5,ly+12*3-24,7,26,'#000'); R(lx-4,ly+12*3-23,5,24,PAL.J); R(lx-5,ly+12*3-29,7,6,'#000'); R(lx-4,ly+12*3-28,5,5,PAL.S);
     R(lx+48-2,ly+12*3,7,22,'#000'); R(lx+48-1,ly+12*3,5,20,PAL.J);
-    // titolo
     if(el>1.8){
       const vis = el<2.5 ? (Math.floor(el*10)%2) : 1;
       if(vis){
         R(70,8,180,40,'#000'); R(72,10,176,36,C.gold); R(74,12,172,32,C.black);
-        T('BUON COMPLEANNO!',160,17,10,C.gold,'Press Start 2P','center');
+        T('HAPPY BIRTHDAY!',160,17,10,C.gold,'Press Start 2P','center');
         T('MATTIAS SCHULBACH · vNEXT',160,32,11,C.white,'VT323','center');
       }
     }
@@ -516,15 +505,17 @@
     if(el>1.6 && Math.random()<dt*3.2) launch();
   }
 
-  // ---------- intervista ----------
+  // ---------- interview ----------
   const INTERVIEW=[
-    ['GIORNALISTA','In diretta con Mattias Schulbach, l\'uomo che fa funzionare la tecnologia in azienda.'],
-    ['MATTIAS','Curo la parte tech. E quando serve aggiusto anche la stampante.'],
-    ['GIORNALISTA','Oggi è il suo compleanno. Come si sente?'],
-    ['MATTIAS','Un anno di esperienza in più e zero bug noti. Per ora.'],
-    ['GIORNALISTA','Il segreto per restare giovani?'],
-    ['MATTIAS','Caffè, dark mode e mai aprire le email il venerdì sera.'],
-    ['GIORNALISTA','Aspetti, ci dicono dalla regia... BREAKING NEWS!'],
+    ['REPORTER','Live with Mattias Schulbach, the man who keeps the company\'s tech running.'],
+    ['MATTIAS','I look after the tech side. And when needed, I fix the printer too.'],
+    ['REPORTER','It\'s your birthday today. How does it feel?'],
+    ['MATTIAS','One more year of experience and zero known bugs. So far.'],
+    ['REPORTER','Word is you\'re deep into rat maxing. Care to comment?'],
+    ['MATTIAS','Rat maxing is a lifestyle. The rats and I have an agreement.'],
+    ['REPORTER','What\'s the secret to staying young?'],
+    ['MATTIAS','Coffee, dark mode, and rat maxing. In that order.'],
+    ['REPORTER','Hold on, the control room is telling us... BREAKING NEWS!'],
   ];
   let acc2=0; const ivStart=[]; INTERVIEW.forEach(l=>{ ivStart.push(acc2); acc2+=1.4+l[1].length*0.042; });
   const IV_TOTAL=acc2+1.6;
@@ -550,29 +541,29 @@
     const [who,txt]=INTERVIEW[idx];
     const typing = (el-ivStart[idx])*24 < txt.length;
     const mouth = Math.floor(el*8)%2===0;
-    drawSprite(HOST_ROWS,HOST_PAL,52,66,3, !(who==='GIORNALISTA' && typing && mouth));
+    drawSprite(HOST_ROWS,HOST_PAL,52,66,3, !(who==='REPORTER' && typing && mouth));
     drawSprite(BODY,PAL,214,62,3, !(who==='MATTIAS' && typing && mouth));
     drawHat(238,64,el);
-    const toM = who!=='GIORNALISTA';
+    const toM = who!=='REPORTER';
     const mx = toM?188:118;
     R(96,100,mx-96,6,'#000'); R(96,101,mx-96,4,HOST_PAL.J); R(mx-2,99,6,7,'#000'); R(mx-1,100,4,5,HOST_PAL.S);
     R(mx+2,94,3,10,'#333'); R(mx,86,7,9,'#000'); R(mx+1,87,5,7,'#555'); R(mx-1,94,9,6,C.red); T('8B',mx+3,94,7,C.white,'VT323','center');
     R(6,6,74,12,C.red); T('8-BIT TECH NEWS',43,7,10,C.white,'VT323','center');
-    R(82,6,70,12,'#000'); if(Math.floor(el*2)%2) R(85,10,4,4,C.red); T('LIVE · IN UFFICIO',120,7,10,C.white,'VT323','center');
+    R(82,6,82,12,'#000'); if(Math.floor(el*2)%2) R(85,10,4,4,C.red); T('LIVE · FROM THE OFFICE',126,7,10,C.white,'VT323','center');
     R(0,122,W,46,'#000');
     R(4,124,24,10,C.red); T('LIVE',16,124,10,C.white,'VT323','center');
-    R(28,124,288,10,C.gold); T('MATTIAS SCHULBACH · ADMIN DI TUTTO · FESTEGGIATO DEL GIORNO',32,124,10,C.black);
+    R(28,124,288,10,C.gold); T('MATTIAS SCHULBACH · ADMIN OF EVERYTHING · BIRTHDAY BOY',32,124,10,C.black);
     R(4,136,312,30,'#0b0f14');
     const shown = txt.slice(0,Math.floor((el-ivStart[idx])*24));
     T(who+':',8,137,10,who==='MATTIAS'?C.gold:C.cyan);
     wrap(shown,300,11).slice(0,2).forEach((ln,i)=>T(ln,8,146+i*9,11,C.white));
     drawTape(el);
     if(el>ivStart[INTERVIEW.length-1]+1.2){
-      if(Math.floor(el*5)%2){ R(0,64,W,30,'#000'); R(0,66,W,26,C.red); T('BREAKING: PULL REQUEST IN ARRIVO',160,70,9,C.white,'Press Start 2P','center'); T('il team ha qualcosa per te',160,81,11,C.white,'VT323','center'); }
+      if(Math.floor(el*5)%2){ R(0,64,W,30,'#000'); R(0,66,W,26,C.red); T('BREAKING: INCOMING PULL REQUEST',160,70,9,C.white,'Press Start 2P','center'); T('the team has something for you',160,81,11,C.white,'VT323','center'); }
     }
   }
 
-  // ---------- stato e storia ----------
+  // ---------- state & story ----------
   const state={scene:'desk',sceneT:0,phase:'pre',price:100,press:0,momentum:3,tickN:0,buyMarks:[],t:0,hat:false,cake:false};
   const buyBtn=document.getElementById('buy'), replayBtn=document.getElementById('replay');
   const ticket=document.getElementById('ticket'), toast=document.getElementById('toast');
@@ -581,18 +572,18 @@
 
   function press(){
     state.press=0.18; state.buyMarks.push(state.tickN); kaching();
-    floatText(['DEPLOY!','+1','SHIP IT','LGTM','AUGURI!'][Math.floor(Math.random()*5)], C.green);
+    floatText(['DEPLOY!','+1','SHIP IT','LGTM','HBD!'][Math.floor(Math.random()*5)], C.green);
   }
 
   const orderEl=document.getElementById('order'), offerEl=document.getElementById('offer');
   const acceptBtn=document.getElementById('accept'), refuseBtn=document.getElementById('refuse');
-  const OFFERS=['+1 anno, +∞ auguri','+1 anno, +∞ auguri, + torta','+1 anno, +∞ auguri, + torta, + aperitivo','+1 anno, +∞ auguri, + torta, + aperitivo, + un giorno senza riunioni'];
+  const OFFERS=['+1 year, +∞ wishes','+1 year, +∞ wishes, + cake','+1 year, +∞ wishes, + cake, + drinks','+1 year, +∞ wishes, + cake, + drinks, + a day with no meetings'];
   const NO=[
-    '«Rollback non consentito: l\'età è un campo in sola lettura.»',
-    '«Errore 403: non hai i permessi per tornare indietro nel tempo.»',
-    '«git revert fallito: troppi bei ricordi in conflitto.»',
-    '«Il backup dell\'anno scorso è corrotto. Meglio così.»',
-    '«Ctrl+Z non funziona sulla vita reale. Abbiamo controllato.»'
+    '«Rollback denied: age is a read-only field.»',
+    '«Error 403: you don\'t have permission to go back in time.»',
+    '«git revert failed: too many good memories in conflict.»',
+    '«Last year\'s backup is corrupted. Just as well.»',
+    '«Ctrl+Z doesn\'t work in real life. We checked.»'
   ];
   let mode='deploy', refusals=0, rollbacks=0, relit=false;
   function showToast(html,ms=3500){ toast.innerHTML=html; toast.classList.add('show'); clearTimeout(state.tt); state.tt=setTimeout(()=>toast.classList.remove('show'),ms); }
@@ -605,8 +596,8 @@
     ticket.classList.remove('show'); orderEl.classList.remove('show'); toast.classList.remove('show'); resetChapters();
     refusals=0; rollbacks=0; offerEl.textContent=OFFERS[0]; refuseBtn.style.display=''; refuseBtn.style.transform='';
     cine.forEach(clearTimeout); cine=[]; state.scene='desk'; skipBtn.hidden=true; rockets.length=0; sparks.length=0;
-    mode='deploy'; buyBtn.textContent='🚀 LANCIA IL DEPLOY'; buyBtn.className='btn gold'; buyBtn.disabled=false; replayBtn.disabled=true;
-    say('<span class="who">SISTEMA ›</span> 23:59:59 · Mattias, c\'è un aggiornamento importante in coda: <b>mattias-vNEXT</b>. Lancia tu il deploy.');
+    mode='deploy'; buyBtn.textContent='🚀 START DEPLOY'; buyBtn.className='btn gold'; buyBtn.disabled=false; replayBtn.disabled=true;
+    say('<span class="who">SYSTEM ›</span> 23:59:59 · Mattias, there\'s an important update in the queue: <b>mattias-vNEXT</b>. You get to push the deploy.');
   }
 
   const skipBtn=document.getElementById('skip');
@@ -618,14 +609,14 @@
     kaching(); setScene('party'); skipBtn.hidden=false; state.hat=true;
     cat(1700,()=>{ jingle(); for(let i=0;i<5;i++) setTimeout(launch,i*120); });
     document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
-    say('<span class="who">SISTEMA ›</span> Deploy in corso... <span class="ok">100%. Mattias vNEXT è in produzione. Buon compleanno!</span>');
-    cat(7500,()=>{ setScene('interview'); say('<span class="who">8-BIT TECH NEWS ›</span> In diretta: l\'intervista al festeggiato del giorno.'); });
+    say('<span class="who">SYSTEM ›</span> Deploying... <span class="ok">100%. Mattias vNEXT is live in production. Happy birthday!</span>');
+    cat(7500,()=>{ setScene('interview'); say('<span class="who">8-BIT TECH NEWS ›</span> Live: an interview with today\'s birthday boy.'); });
     cat(7500+IV_TOTAL*1000,toDesk);
   }
   function toDesk(){
     cine.forEach(clearTimeout); cine=[]; skipBtn.hidden=true; state.hat=true;
     setScene('desk'); state.phase='wait'; kaching();
-    say('<span class="who">GIT ›</span> ⚡ Nuova pull request da parte del team. Reviewer: tu. Fai il merge?');
+    say('<span class="who">GIT ›</span> ⚡ New pull request from the team. Reviewer: you. Merge it?');
     orderEl.classList.add('show'); setTimeout(()=>orderEl.scrollIntoView({behavior:'smooth',block:'center'}),200);
   }
   skipBtn.onclick=toDesk;
@@ -635,26 +626,26 @@
     if(refusals<OFFERS.length){
       offerEl.textContent=OFFERS[refusals]; press(); state.phase='buy'; state.momentum+=2;
       setTimeout(()=>{ if(state.phase==='buy') state.phase='wait' },700);
-      say('<span class="who">IL TEAM ›</span> «Modifiche fatte.» Nuova versione della PR: '+OFFERS[refusals]+'.');
+      say('<span class="who">THE TEAM ›</span> «Changes done.» New version of the PR: '+OFFERS[refusals]+'.');
       refuseBtn.style.transform=`translate(${(Math.random()-.5)*160}px,${(Math.random()-.5)*20}px) scale(${1-refusals*.2})`;
     } else {
       refuseBtn.style.display='none'; beep(220,.4,'sawtooth',.05);
-      say('<span class="who">CI ›</span> Il pulsante RICHIEDI MODIFICHE è stato rimosso: la PR è già perfetta.');
+      say('<span class="who">CI ›</span> The REQUEST CHANGES button has been removed: the PR is already perfect.');
     }
   };
 
   acceptBtn.onclick=()=>{
     orderEl.classList.remove('show');
     document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
-    state.phase='buy'; say('<span class="who">MATTIAS ›</span> «LGTM. Merge. Deploy. Subito.»');
+    state.phase='buy'; say('<span class="who">MATTIAS ›</span> «LGTM. Merge. Deploy. Now.»');
     [100,350,600,850,1100,1350,1600].forEach(ms=>at(ms,()=>{press(); state.momentum+=1.3}));
     at(2300,merged);
   };
   function merged(){
     state.phase='done'; state.cake=true; burst(60); chime();
     document.getElementById('finalPrice').textContent=OFFERS[Math.min(refusals,OFFERS.length-1)];
-    say('<span class="ok">MERGE COMPLETATO.</span> Sulla scrivania è comparsa una torta. Esprimi un desiderio e spegni le candeline.');
-    mode='candles'; buyBtn.textContent='🎂 SOFFIA SULLE CANDELINE'; buyBtn.className='btn gold'; buyBtn.disabled=false;
+    say('<span class="ok">MERGE COMPLETE.</span> A cake just appeared on the desk. Make a wish and blow out the candles.');
+    mode='candles'; buyBtn.textContent='🎂 BLOW OUT THE CANDLES'; buyBtn.className='btn gold'; buyBtn.disabled=false;
   }
   function blowCandle(){
     const i=cakeC.indexOf(true); if(i<0) return;
@@ -665,17 +656,17 @@
       relit=true;
       setTimeout(()=>{
         cakeC[1]=true; cakeC[3]=true; beep(220,.3,'sawtooth',.05);
-        say('<span class="who">SISTEMA ›</span> ⚠ Bug in produzione: due candeline si sono riaccese da sole. Serve un hotfix.');
-        buyBtn.textContent='🎂 HOTFIX: SOFFIA ANCORA'; buyBtn.disabled=false;
+        say('<span class="who">SYSTEM ›</span> ⚠ Production bug: two candles relit on their own. Hotfix needed.');
+        buyBtn.textContent='🎂 HOTFIX: BLOW AGAIN'; buyBtn.disabled=false;
       },1000);
     } else setTimeout(celebrate,500);
   }
   function celebrate(){
     burst(120); jingle(); for(let i=0;i<3;i++) setTimeout(()=>burst(30),i*500);
-    say('<span class="ok">HOTFIX RIUSCITO.</span> Tutte le candeline sono spente. Il desiderio è in coda di esecuzione. Auguri, Mattias!');
+    say('<span class="ok">HOTFIX SUCCESSFUL.</span> All candles are out. Your wish is queued for execution. Happy birthday, Mattias!');
     ticket.classList.add('show'); setTimeout(()=>ticket.scrollIntoView({behavior:'smooth',block:'center'}),100);
     setTimeout(()=>document.getElementById('next').classList.add('show'),1200);
-    mode='rollback'; buyBtn.textContent='⏪ ROLLBACK DELL\'ETÀ'; buyBtn.className='btn ghost'; buyBtn.disabled=false; replayBtn.disabled=false;
+    mode='rollback'; buyBtn.textContent='⏪ ROLL BACK MY AGE'; buyBtn.className='btn ghost'; buyBtn.disabled=false; replayBtn.disabled=false;
   }
 
   buyBtn.onclick=()=>{
@@ -683,20 +674,20 @@
     if(mode==='candles') return blowCandle();
     rollbacks++;
     if(rollbacks<=NO.length){
-      say('<span class="who">SISTEMA ›</span> '+NO[rollbacks-1]);
+      say('<span class="who">SYSTEM ›</span> '+NO[rollbacks-1]);
       press(); state.phase='buy'; state.momentum+=1.5;
       clearTimeout(state.back); state.back=setTimeout(()=>{ if(state.phase==='buy') state.phase='done' },800);
     }
     if(rollbacks===NO.length){
       clearTimeout(state.back);
       state.phase='halt'; buyBtn.disabled=true; beep(220,.5,'sawtooth',.06);
-      showToast('ROLLBACK RESPINTO<br>Gli anni non si annullano.<br>Si festeggiano. Auguri!',4000);
+      showToast('ROLLBACK DENIED<br>Years can\'t be undone.<br>They get celebrated. Happy birthday!',4000);
       setTimeout(()=>{ state.phase='done'; rollbacks=0; buyBtn.disabled=false },4000);
     }
   };
   replayBtn.onclick=story;
 
-  // ---------- capitoli extra ----------
+  // ---------- bonus chapters ----------
   const chEl=document.getElementById('chapter'), nextWrap=document.getElementById('next');
   const BASE_TAPE=tape;
   const picks={};
@@ -705,37 +696,37 @@
   function resetChapters(){ chEl.classList.remove('show'); chEl.innerHTML=''; nextWrap.classList.remove('show'); tape=BASE_TAPE; for(const k in picks) delete picks[k]; }
 
   const STEPS=[
-    { tag:'CAPITOLO 2 · 1/4', title:'IL DESIDERIO', key:'desiderio',
-      q:'Le candeline sono spente. <i>Quale desiderio metti nel backlog?</i>',
+    { tag:'CHAPTER 2 · 1/4', title:'THE WISH', key:'wish',
+      q:'The candles are out. <i>Which wish goes into the backlog?</i>',
       opts:[
-        ['Zero bug in produzione','Desiderio inserito con priorità massima. Tempo stimato: per sempre.','DESIDERIO PRIORITÀ MASSIMA: ZERO BUG. STIMA: INFINITA'],
-        ['Un weekend senza notifiche','Slack in silenzioso per 48 ore. Il team promette di provarci.','48 ORE SENZA NOTIFICHE: IL TEAM CI PROVA'],
-        ['Un monitor in più','Approvato. La scrivania ora sembra la sala controllo della NASA.','APPROVATO IL TERZO MONITOR'],
-        ['Niente deploy il venerdì','Regola scolpita nella pietra. Anzi, nel README.','NIENTE DEPLOY IL VENERDÌ: ORA È LEGGE'],
+        ['Zero bugs in production','Wish added at top priority. Estimate: forever.','TOP-PRIORITY WISH: ZERO BUGS. ESTIMATE: INFINITE'],
+        ['A weekend with no notifications','Slack on mute for 48 hours. The team promises to try.','48 HOURS WITHOUT NOTIFICATIONS: TEAM WILL TRY'],
+        ['One more monitor','Approved. The desk now looks like NASA mission control.','THIRD MONITOR APPROVED'],
+        ['No deploys on Fridays','Carved in stone. Well, in the README.','NO FRIDAY DEPLOYS: IT IS NOW LAW'],
       ]},
-    { tag:'CAPITOLO 3 · 2/4', title:'LA FESTA', key:'festa',
-      q:'Il team vuole festeggiare. <i>Dove si va?</i>',
+    { tag:'CHAPTER 3 · 2/4', title:'THE PARTY', key:'party',
+      q:'The team wants to celebrate. <i>Where are we going?</i>',
       opts:[
-        ['Aperitivo','Il bar sotto l\'ufficio registra un picco di traffico mai visto.','APERITIVO DI MATTIAS: SERVER DEL BAR IN DIFFICOLTÀ'],
-        ['Pizza tutti insieme','Ordine inviato. La pizzeria chiede se è un attacco DDoS.','ORDINE DI PIZZE RECORD: LA PIZZERIA SCALA I FORNI'],
-        ['LAN party come nel 2005','Cavi ethernet ovunque. Qualcuno ha portato un CRT da 30 kg.','RITORNA IL LAN PARTY: CAVI ETHERNET ESAURITI'],
-        ['Torta in ufficio, poi si lavora','Il team applaude. Poi riapre il portatile. Poi lo richiude.','TORTA IN UFFICIO: PRODUTTIVITÀ IN PAUSA'],
+        ['Drinks','The bar downstairs sees a traffic spike like never before.','MATTIAS\'S DRINKS: BAR SERVERS UNDER HEAVY LOAD'],
+        ['Pizza, all together','Order sent. The pizzeria asks if it\'s a DDoS attack.','RECORD PIZZA ORDER: PIZZERIA SCALES UP ITS OVENS'],
+        ['LAN party like it\'s 2005','Ethernet cables everywhere. Someone brought a 30 kg CRT.','LAN PARTY IS BACK: ETHERNET CABLES SOLD OUT'],
+        ['Cake at the office, then back to work','The team applauds. Then opens the laptop. Then closes it again.','CAKE AT THE OFFICE: PRODUCTIVITY ON PAUSE'],
       ]},
-    { tag:'CAPITOLO 3 · 3/4', title:'CONFERENZA STAMPA', key:'motto',
-      q:'<b>Wired 8-bit</b> <i>— «Il suo motto da tecnico?»</i>',
+    { tag:'CHAPTER 3 · 3/4', title:'PRESS CONFERENCE', key:'motto',
+      q:'<b>Wired 8-bit</b> <i>— «What\'s your motto as the tech guy?»</i>',
       opts:[
-        ['«Hai provato a spegnere e riaccendere?»','Funziona nel 90% dei casi. Il restante 10% lo sistema lui.','SPEGNI E RIACCENDI: IL METODO CHE NON SBAGLIA'],
-        ['«In locale funziona»','La sala stampa annuisce. Tutti l\'hanno detto almeno una volta.','«IN LOCALE FUNZIONA»: FRASE DELL\'ANNO'],
-        ['«Non è un bug, è una feature»','Gli investitori prendono appunti e chiedono più feature.','NON È UN BUG, È UNA FEATURE: INVESTITORI CONVINTI'],
-        ['«Lo sistemo dopo»','Il "dopo" è già in calendario. Per il prossimo trimestre.','«LO SISTEMO DOPO»: IL TICKET È APERTO DAL 2019'],
+        ['«Have you tried turning it off and on again?»','Works 90% of the time. He fixes the other 10%.','OFF AND ON AGAIN: THE METHOD THAT NEVER FAILS'],
+        ['«Works on my machine»','The press room nods. Everyone has said it at least once.','«WORKS ON MY MACHINE»: QUOTE OF THE YEAR'],
+        ['«It\'s not a bug, it\'s a feature»','Investors take notes and ask for more features.','NOT A BUG, A FEATURE: INVESTORS CONVINCED'],
+        ['«I\'ll fix it later»','"Later" is already in the calendar. Next quarter.','«I\'LL FIX IT LATER»: TICKET OPEN SINCE 2019'],
       ]},
-    { tag:'CAPITOLO 4 · 4/4', title:'SPEGNIMENTO', key:'chiusura',
-      q:'Fine della giornata. <i>Come chiudi il compleanno?</i>',
+    { tag:'CHAPTER 4 · 4/4', title:'SHUTDOWN', key:'end',
+      q:'End of the day. <i>How do you wrap up your birthday?</i>',
       opts:[
-        ['git commit -m "anno fantastico"','Commit firmato e pushato. Il changelog dell\'anno è perfetto.','COMMIT DELL\'ANNO PUSHATO SU MAIN'],
-        ['Brindisi con il team','Il team era già pronto con i bicchieri. Da un\'ora.','BRINDISI CON IL TEAM: MORALE AL MASSIMO STORICO'],
-        ['Spengo il PC (stavolta davvero)','Per la prima volta nella storia, nessun LED acceso sulla scrivania.','IL PC DI MATTIAS È SPENTO: GLI ESPERTI INCREDULI'],
-        ['Dormo 14 ore, non mi pingate','Stato impostato su "non disturbare". Il team rispetta. Quasi.','MATTIAS È OFFLINE: SERVER IN MODALITÀ AUTOPILOTA'],
+        ['git commit -m "great year"','Commit signed and pushed. This year\'s changelog is perfect.','COMMIT OF THE YEAR PUSHED TO MAIN'],
+        ['A toast with the team','The team was already holding the glasses. For an hour.','TOAST WITH THE TEAM: MORALE AT ALL-TIME HIGH'],
+        ['Shut down the PC (for real this time)','For the first time in history, not a single LED on the desk.','MATTIAS\'S PC IS OFF: EXPERTS IN DISBELIEF'],
+        ['Sleep 14 hours, don\'t ping me','Status set to "do not disturb". The team respects it. Mostly.','MATTIAS IS OFFLINE: SERVERS ON AUTOPILOT'],
       ]},
   ];
 
@@ -747,52 +738,52 @@
       <div class="reply"></div><div class="go"></div>`;
     chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
     chEl.scrollIntoView({behavior:'smooth',block:'center'});
-    say('<span class="who">SISTEMA ›</span> '+st.title.toLowerCase().replace(/^./,c=>c.toUpperCase())+'. Tocca a te, Mattias.');
+    say('<span class="who">SYSTEM ›</span> '+st.title.toLowerCase().replace(/^./,c=>c.toUpperCase())+'. Your turn, Mattias.');
     chEl.querySelectorAll('.choices .btn').forEach(b=>b.onclick=()=>{
       const o=st.opts[+b.dataset.k]; picks[st.key]=o[0];
       chEl.querySelectorAll('.choices .btn').forEach(x=>{x.disabled=true; if(x!==b) x.style.opacity=.35});
       b.style.background='var(--gold)';
       const r=chEl.querySelector('.reply'); r.innerHTML='<b>▲ '+o[2]+'</b><br>'+o[1]; r.classList.add('show');
       headline(o[2]); bump(3);
-      if(st.key==='chiusura'){ chime(); burst(120); } else burst(25);
+      if(st.key==='end'){ chime(); burst(120); } else burst(25);
       say('<span class="ok">FLASH ›</span> '+o[2]);
       const go=chEl.querySelector('.go');
-      go.innerHTML=`<button class="btn gold">${i===STEPS.length-1?'LEGGI LA CODE REVIEW ▶':'AVANTI ▶'}</button>`;
+      go.innerHTML=`<button class="btn gold">${i===STEPS.length-1?'READ THE CODE REVIEW ▶':'NEXT ▶'}</button>`;
       go.firstChild.onclick=()=>showStep(i+1);
     });
   }
 
   function showReport(){
-    chEl.innerHTML=`<div class="tag">CODE REVIEW · DAL TEAM</div>
-      <h2>MATTIAS vNEXT · REVIEW ANNUALE</h2>
+    chEl.innerHTML=`<div class="tag">CODE REVIEW · FROM THE TEAM</div>
+      <h2>MATTIAS vNEXT · ANNUAL REVIEW</h2>
       <div class="report">
         <div class="big">
-          <div class="kpi"><small>Esito</small><span>APPROVED ✓</span></div>
+          <div class="kpi"><small>Outcome</small><span>APPROVED ✓</span></div>
           <div class="kpi"><small>Rating</small><span>★★★★★</span></div>
-          <div class="kpi"><small>Commento</small><span>LGTM</span></div>
+          <div class="kpi"><small>Comment</small><span>LGTM</span></div>
         </div>
-        <h4>PUNTI DI FORZA</h4>
+        <h4>STRENGTHS</h4>
         <ul>
-          <li>Affidabile: se qualcosa si rompe, sa già dove guardare</li>
-          <li>Desiderio in backlog: <b>${picks.desiderio||'—'}</b></li>
-          <li>Piano per la festa: <b>${picks.festa||'—'}</b></li>
-          <li>Motto ufficiale: <b>${picks.motto||'—'}</b></li>
+          <li>Reliable: when something breaks, he already knows where to look</li>
+          <li>Wish in the backlog: <b>${picks.wish||'—'}</b></li>
+          <li>Party plan: <b>${picks.party||'—'}</b></li>
+          <li>Official motto: <b>${picks.motto||'—'}</b></li>
         </ul>
-        <h4>RISCHI NOTI</h4>
+        <h4>KNOWN RISKS</h4>
         <ul>
-          <li>La festa potrebbe rallentare i deploy del giorno dopo</li>
-          <li>Il pulsante "rollback dell'età" non funziona (per fortuna)</li>
-          <li>Chiusura della giornata: <b>${picks.chiusura||'—'}</b></li>
+          <li>The party might slow down tomorrow's deploys</li>
+          <li>The "roll back my age" button doesn't work (luckily)</li>
+          <li>End of the day: <b>${picks.end||'—'}</b></li>
         </ul>
-        <h4>CONCLUSIONE</h4>
-        Codice pulito, uptime eccellente, ottimo compagno di squadra. Approvato per un altro anno in produzione.
-        <div class="end">BUON COMPLEANNO, MATTIAS 🎂<br>— IL TUO TEAM</div>
+        <h4>CONCLUSION</h4>
+        Clean code, excellent uptime, great teammate. Approved for another year in production.
+        <div class="end">HAPPY BIRTHDAY, MATTIAS 🎂<br>— YOUR TEAM</div>
       </div>
-      <div class="go"><button class="btn ghost" id="again">RICOMINCIA DAL DEPLOY</button></div>`;
+      <div class="go"><button class="btn ghost" id="again">START OVER FROM THE DEPLOY</button></div>`;
     chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
     chEl.scrollIntoView({behavior:'smooth',block:'start'});
     jingle(); burst(100); bump(6);
-    say('<span class="ok">REVIEW PUBBLICATA ›</span> Esito: APPROVED. Commento: LGTM. Buon compleanno!');
+    say('<span class="ok">REVIEW PUBLISHED ›</span> Outcome: APPROVED. Comment: LGTM. Happy birthday!');
     document.getElementById('again').onclick=()=>{ window.scrollTo({top:0,behavior:'smooth'}); story(); };
   }
   document.getElementById('nextBtn').onclick=()=>{ nextWrap.classList.remove('show'); showStep(0); };
@@ -823,7 +814,7 @@
 
     R(232,4,84,11,'#000'); R(233,5,82,9,C.redD);
     if(Math.floor(state.t*2)%2) R(236,8,3,3,C.red);
-    T('LIVE · ADMIN AL LAVORO',277,5,9,C.white,'VT323','center');
+    T('LIVE · ADMIN AT WORK',277,5,9,C.white,'VT323','center');
     drawMonitor(state.t);
     drawMattias(state.t);
     drawDesk();

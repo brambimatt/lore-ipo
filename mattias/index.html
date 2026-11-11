@@ -4,10 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#0B0F14" />
-<title>DEPLOY COMPLETATO · MATTIA vNEXT</title>
-<meta name="description" content="Una nuova versione di Mattia è in produzione. Buon compleanno!" />
-<meta property="og:title" content="DEPLOY COMPLETATO · MATTIA vNEXT" />
-<meta property="og:description" content="Una nuova versione di Mattia è in produzione. Buon compleanno!" />
+<title>DEPLOY COMPLETATO · MATTIAS vNEXT</title>
+<meta name="description" content="Una nuova versione di Mattias è in produzione. Buon compleanno!" />
+<meta property="og:title" content="DEPLOY COMPLETATO · MATTIAS vNEXT" />
+<meta property="og:description" content="Una nuova versione di Mattias è in produzione. Buon compleanno!" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
@@ -100,7 +100,7 @@
 </style>
 </head>
 <body>
-  <div class="brand">MATTIA.OS · TERMINALE DI SISTEMA · vNEXT<br><span>UTENTE: MATTIA SCHULBACH · CTO*</span></div>
+  <div class="brand">MATTIAS.OS · TERMINALE DI SISTEMA · vNEXT<br><span>UTENTE: MATTIAS SCHULBACH · ADMIN DI TUTTO</span></div>
 
   <div class="wrap">
     <div class="screen">
@@ -108,7 +108,7 @@
       <div class="crt"></div>
       <button class="btn ghost skip" id="skip" hidden>SALTA ▶</button>
       <div class="start" id="start">
-        <h1>MATTIA, C'È UN AGGIORNAMENTO PER TE</h1>
+        <h1>MATTIAS, C'È UN AGGIORNAMENTO PER TE</h1>
         <p>Una nuova versione è pronta. Il deploy lo lanci tu.</p>
         <button class="btn gold" id="go">AVVIA IL SISTEMA</button>
       </div>
@@ -126,7 +126,7 @@
       <div class="row"><span>Autore</span><span>Il team</span></div>
       <div class="row"><span>Branch</span><span>feature/compleanno → main</span></div>
       <div class="row"><span>Modifiche</span><span id="offer">+1 anno, +∞ auguri</span></div>
-      <div class="row"><span>Reviewer</span><span>Mattia Schulbach</span></div>
+      <div class="row"><span>Reviewer</span><span>Mattias Schulbach</span></div>
       <div class="row"><span>Test</span><span>✅ tutti verdi</span></div>
       <div class="btns">
         <button class="btn" id="accept">MERGE</button>
@@ -136,11 +136,11 @@
 
     <div class="ticket" id="ticket">
       <div class="stamp">RILASCIATO</div>
-      <h2>RELEASE NOTES · MATTIA vNEXT</h2>
+      <h2>RELEASE NOTES · MATTIAS vNEXT</h2>
       <div class="sub">Build stabile · in produzione da oggi</div>
       <table>
         <tr><td>Versione</td><td>quella di prima, +1</td></tr>
-        <tr><td>Ruolo</td><td>CTO* (*più o meno)</td></tr>
+        <tr><td>Ruolo</td><td>quello che fa funzionare tutto</td></tr>
         <tr><td>Contenuto della PR</td><td class="up" id="finalPrice">+1 anno, +∞ auguri</td></tr>
         <tr><td>Nuove feature</td><td>saggezza +1, pazienza +1</td></tr>
         <tr><td>Bug risolti</td><td>i lunedì mattina (in parte)</td></tr>
@@ -152,7 +152,7 @@
         <b>MESSAGGIO DAL TEAM</b>
         Grazie per tenere in piedi tutta la parte tech, anche quella che non si vede.
         Se qualcosa funziona, di solito c'è dietro la tua mano.<br><br>
-        Buon compleanno, Mattia! 🎂
+        Buon compleanno, Mattias! 🎂
       </div>
       <div class="sign">— Matteo e tutto il team</div>
     </div>
@@ -195,7 +195,7 @@
   }
   const billboards = [{x:196,y:22,w:22,h:14,c:C.pink},{x:296,y:30,w:18,h:22,c:C.cyan},{x:186,y:44,w:12,h:18,c:C.gold}];
 
-  // ---------- sprite (Mattia, in felpa) ----------
+  // ---------- sprite (Mattias, in felpa) ----------
   const PAL = {H:'#4a2e1a',h:'#6b4528',S:'#f1c27d',s:'#d9a066',K:'#0b0f14',k:'#2c3e66',W:'#f4f4f4',T:C.green,t:C.greenD,J:'#24495a',j:'#173341',M:'#7a1c20',m:'#f4f4f4'};
   const BODY = [
     '....HHHHHHHH....',
@@ -226,7 +226,7 @@
     R(cx-3,topY-19,6,6,'#000'); R(cx-2,topY-18,4,4,C.white);
   }
   const PX=3, MX=226, MY=55;
-  function drawMattia(t){
+  function drawMattias(t){
     const bob = state.phase==='buy' ? (Math.floor(t*8)%2) : 0;
     BODY.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
       if(ch!=='.') R(MX+rx*PX-1, MY+ry*PX-(ry<12?bob:0)-1, PX+2, PX+2, '#000');
@@ -274,7 +274,7 @@
     const x=10,y=18,w=176,h=110;
     R(x-3,y-3,w+6,h+6,'#000'); R(x-2,y-2,w+4,h+4,'#2b3a5c'); R(x,y,w,h,C.black);
     R(x+w/2-10,y+h+3,20,6,'#2b3a5c'); R(x+w/2-20,y+h+9,40,3,'#2b3a5c');
-    T('mattia@prod:~$ hype', x+5, y+3, 12, C.green);
+    T('mattias@prod:~$ hype', x+5, y+3, 12, C.green);
     const up = state.price>=100;
     const pct = ((state.price/100-1)*100);
     const valStr = state.phase==='halt' ? 'LOCKED' : state.price.toFixed(0)+'%';
@@ -344,11 +344,11 @@
     }
     // targhetta
     R(36,140,124,16,'#14100c'); R(37,141,122,14,C.goldD); R(38,142,120,12,'#d8b24a');
-    T('MATTIA SCHULBACH · CTO*', 98, 143, 11, '#2b1d14','VT323','center');
+    T('MATTIAS SCHULBACH · ADMIN', 98, 143, 11, '#2b1d14','VT323','center');
   }
 
   // ---------- nastro scorrevole ----------
-  let tape = '  MATTIA vNEXT ▲ IN PRODUZIONE  ·  BUON COMPLEANNO MATTIA  ·  CTO* (*PIÙ O MENO)  ·  ZERO BUG NOTI  ·  UPTIME: TUTTA LA VITA  ·  AUGURI DAL TEAM  ·';
+  let tape = '  MATTIAS vNEXT ▲ IN PRODUZIONE  ·  BUON COMPLEANNO MATTIAS  ·  ADMIN DI TUTTO  ·  ZERO BUG NOTI  ·  UPTIME: TUTTA LA VITA  ·  AUGURI DAL TEAM  ·';
   function drawTape(t){
     R(0,168,W,12,'#000'); R(0,168,W,1,C.gold);
     g.font='11px "VT323"'; const tw = g.measureText(tape).width;
@@ -490,13 +490,13 @@
       R(bx+6,by+18,80,7,'#1b2a4a'); R(bx+6,by+18,Math.floor(80*prog),7,C.green);
     } else {
       const on=Math.floor(el*3)%2;
-      T('MATTIA',bx+46,by+1,16,on?C.gold:C.green,'VT323','center');
+      T('MATTIAS',bx+46,by+1,16,on?C.gold:C.green,'VT323','center');
       T('▲ vNEXT · 100% OK',bx+46,by+16,11,C.green,'VT323','center');
     }
     // fiume con riflessi
     R(0,150,W,30,'#07091a');
     for(let i=0;i<28;i++){ const rx=(i*53+Math.floor(el*20))%W, ry=152+(i*7)%26; R(rx,ry,6+(i%4)*3,1,[C.gold,C.pink,C.cyan,C.green][i%4]+'66'); }
-    // terrazza + Mattia che esulta col cappellino
+    // terrazza + Mattias che esulta col cappellino
     R(0,138,96,12,'#0b0816'); R(0,138,96,1,'#3a2a50');
     const lx=34, ly=138-19*3+ (Math.floor(el*6)%2);
     drawSprite(BODY,PAL,lx,ly,3,false);
@@ -509,7 +509,7 @@
       if(vis){
         R(70,8,180,40,'#000'); R(72,10,176,36,C.gold); R(74,12,172,32,C.black);
         T('BUON COMPLEANNO!',160,17,10,C.gold,'Press Start 2P','center');
-        T('MATTIA SCHULBACH · CTO*',160,32,11,C.white,'VT323','center');
+        T('MATTIAS SCHULBACH · vNEXT',160,32,11,C.white,'VT323','center');
       }
     }
     if(el<0.4){ g.globalAlpha=1-el/0.4; R(0,0,W,H,'#fff'); g.globalAlpha=1; }
@@ -518,12 +518,12 @@
 
   // ---------- intervista ----------
   const INTERVIEW=[
-    ['GIORNALISTA','In diretta con Mattia Schulbach, CTO dell\'azienda. Anzi... CTO?'],
-    ['MATTIA','Diciamo CTO-ish. Curo la parte tech. E quando serve aggiusto la stampante.'],
+    ['GIORNALISTA','In diretta con Mattias Schulbach, l\'uomo che fa funzionare la tecnologia in azienda.'],
+    ['MATTIAS','Curo la parte tech. E quando serve aggiusto anche la stampante.'],
     ['GIORNALISTA','Oggi è il suo compleanno. Come si sente?'],
-    ['MATTIA','Un anno di esperienza in più e zero bug noti. Per ora.'],
+    ['MATTIAS','Un anno di esperienza in più e zero bug noti. Per ora.'],
     ['GIORNALISTA','Il segreto per restare giovani?'],
-    ['MATTIA','Caffè, dark mode e mai aprire le email il venerdì sera.'],
+    ['MATTIAS','Caffè, dark mode e mai aprire le email il venerdì sera.'],
     ['GIORNALISTA','Aspetti, ci dicono dalla regia... BREAKING NEWS!'],
   ];
   let acc2=0; const ivStart=[]; INTERVIEW.forEach(l=>{ ivStart.push(acc2); acc2+=1.4+l[1].length*0.042; });
@@ -544,14 +544,14 @@
     g.restore();
     for(let x=16;x<304;x+=72) R(x,10,2,108,'#1b2236');
     R(16,62,288,2,'#1b2236');
-    R(126,16,68,28,'#000'); R(128,18,64,24,'#081018'); T('MATTIA ▲',160,19,11,C.green,'VT323','center'); T('vNEXT',160,29,11,C.gold,'VT323','center');
+    R(126,16,68,28,'#000'); R(128,18,64,24,'#081018'); T('MATTIAS ▲',160,19,11,C.green,'VT323','center'); T('vNEXT',160,29,11,C.gold,'VT323','center');
     R(0,120,W,60,'#141b30'); for(let x=0;x<W;x+=20) R(x,120,1,60,'#1b2440');
     let idx=0; for(let i=0;i<INTERVIEW.length;i++) if(el>=ivStart[i]) idx=i;
     const [who,txt]=INTERVIEW[idx];
     const typing = (el-ivStart[idx])*24 < txt.length;
     const mouth = Math.floor(el*8)%2===0;
     drawSprite(HOST_ROWS,HOST_PAL,52,66,3, !(who==='GIORNALISTA' && typing && mouth));
-    drawSprite(BODY,PAL,214,62,3, !(who==='MATTIA' && typing && mouth));
+    drawSprite(BODY,PAL,214,62,3, !(who==='MATTIAS' && typing && mouth));
     drawHat(238,64,el);
     const toM = who!=='GIORNALISTA';
     const mx = toM?188:118;
@@ -561,10 +561,10 @@
     R(82,6,70,12,'#000'); if(Math.floor(el*2)%2) R(85,10,4,4,C.red); T('LIVE · IN UFFICIO',120,7,10,C.white,'VT323','center');
     R(0,122,W,46,'#000');
     R(4,124,24,10,C.red); T('LIVE',16,124,10,C.white,'VT323','center');
-    R(28,124,288,10,C.gold); T('MATTIA SCHULBACH · CTO* (PIÙ O MENO) · FESTEGGIATO DEL GIORNO',32,124,10,C.black);
+    R(28,124,288,10,C.gold); T('MATTIAS SCHULBACH · ADMIN DI TUTTO · FESTEGGIATO DEL GIORNO',32,124,10,C.black);
     R(4,136,312,30,'#0b0f14');
     const shown = txt.slice(0,Math.floor((el-ivStart[idx])*24));
-    T(who+':',8,137,10,who==='MATTIA'?C.gold:C.cyan);
+    T(who+':',8,137,10,who==='MATTIAS'?C.gold:C.cyan);
     wrap(shown,300,11).slice(0,2).forEach((ln,i)=>T(ln,8,146+i*9,11,C.white));
     drawTape(el);
     if(el>ivStart[INTERVIEW.length-1]+1.2){
@@ -606,7 +606,7 @@
     refusals=0; rollbacks=0; offerEl.textContent=OFFERS[0]; refuseBtn.style.display=''; refuseBtn.style.transform='';
     cine.forEach(clearTimeout); cine=[]; state.scene='desk'; skipBtn.hidden=true; rockets.length=0; sparks.length=0;
     mode='deploy'; buyBtn.textContent='🚀 LANCIA IL DEPLOY'; buyBtn.className='btn gold'; buyBtn.disabled=false; replayBtn.disabled=true;
-    say('<span class="who">SISTEMA ›</span> 23:59:59 · Mattia, c\'è un aggiornamento importante in coda: <b>mattia-vNEXT</b>. Lancia tu il deploy.');
+    say('<span class="who">SISTEMA ›</span> 23:59:59 · Mattias, c\'è un aggiornamento importante in coda: <b>mattias-vNEXT</b>. Lancia tu il deploy.');
   }
 
   const skipBtn=document.getElementById('skip');
@@ -618,7 +618,7 @@
     kaching(); setScene('party'); skipBtn.hidden=false; state.hat=true;
     cat(1700,()=>{ jingle(); for(let i=0;i<5;i++) setTimeout(launch,i*120); });
     document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
-    say('<span class="who">SISTEMA ›</span> Deploy in corso... <span class="ok">100%. Mattia vNEXT è in produzione. Buon compleanno!</span>');
+    say('<span class="who">SISTEMA ›</span> Deploy in corso... <span class="ok">100%. Mattias vNEXT è in produzione. Buon compleanno!</span>');
     cat(7500,()=>{ setScene('interview'); say('<span class="who">8-BIT TECH NEWS ›</span> In diretta: l\'intervista al festeggiato del giorno.'); });
     cat(7500+IV_TOTAL*1000,toDesk);
   }
@@ -646,7 +646,7 @@
   acceptBtn.onclick=()=>{
     orderEl.classList.remove('show');
     document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
-    state.phase='buy'; say('<span class="who">MATTIA ›</span> «LGTM. Merge. Deploy. Subito.»');
+    state.phase='buy'; say('<span class="who">MATTIAS ›</span> «LGTM. Merge. Deploy. Subito.»');
     [100,350,600,850,1100,1350,1600].forEach(ms=>at(ms,()=>{press(); state.momentum+=1.3}));
     at(2300,merged);
   };
@@ -672,7 +672,7 @@
   }
   function celebrate(){
     burst(120); jingle(); for(let i=0;i<3;i++) setTimeout(()=>burst(30),i*500);
-    say('<span class="ok">HOTFIX RIUSCITO.</span> Tutte le candeline sono spente. Il desiderio è in coda di esecuzione. Auguri, Mattia!');
+    say('<span class="ok">HOTFIX RIUSCITO.</span> Tutte le candeline sono spente. Il desiderio è in coda di esecuzione. Auguri, Mattias!');
     ticket.classList.add('show'); setTimeout(()=>ticket.scrollIntoView({behavior:'smooth',block:'center'}),100);
     setTimeout(()=>document.getElementById('next').classList.add('show'),1200);
     mode='rollback'; buyBtn.textContent='⏪ ROLLBACK DELL\'ETÀ'; buyBtn.className='btn ghost'; buyBtn.disabled=false; replayBtn.disabled=false;
@@ -716,13 +716,13 @@
     { tag:'CAPITOLO 3 · 2/4', title:'LA FESTA', key:'festa',
       q:'Il team vuole festeggiare. <i>Dove si va?</i>',
       opts:[
-        ['Aperitivo','Il bar sotto l\'ufficio registra un picco di traffico mai visto.','APERITIVO DEL CTO*: SERVER DEL BAR IN DIFFICOLTÀ'],
+        ['Aperitivo','Il bar sotto l\'ufficio registra un picco di traffico mai visto.','APERITIVO DI MATTIAS: SERVER DEL BAR IN DIFFICOLTÀ'],
         ['Pizza tutti insieme','Ordine inviato. La pizzeria chiede se è un attacco DDoS.','ORDINE DI PIZZE RECORD: LA PIZZERIA SCALA I FORNI'],
         ['LAN party come nel 2005','Cavi ethernet ovunque. Qualcuno ha portato un CRT da 30 kg.','RITORNA IL LAN PARTY: CAVI ETHERNET ESAURITI'],
         ['Torta in ufficio, poi si lavora','Il team applaude. Poi riapre il portatile. Poi lo richiude.','TORTA IN UFFICIO: PRODUTTIVITÀ IN PAUSA'],
       ]},
     { tag:'CAPITOLO 3 · 3/4', title:'CONFERENZA STAMPA', key:'motto',
-      q:'<b>Wired 8-bit</b> <i>— «Il suo motto da CTO*?»</i>',
+      q:'<b>Wired 8-bit</b> <i>— «Il suo motto da tecnico?»</i>',
       opts:[
         ['«Hai provato a spegnere e riaccendere?»','Funziona nel 90% dei casi. Il restante 10% lo sistema lui.','SPEGNI E RIACCENDI: IL METODO CHE NON SBAGLIA'],
         ['«In locale funziona»','La sala stampa annuisce. Tutti l\'hanno detto almeno una volta.','«IN LOCALE FUNZIONA»: FRASE DELL\'ANNO'],
@@ -733,9 +733,9 @@
       q:'Fine della giornata. <i>Come chiudi il compleanno?</i>',
       opts:[
         ['git commit -m "anno fantastico"','Commit firmato e pushato. Il changelog dell\'anno è perfetto.','COMMIT DELL\'ANNO PUSHATO SU MAIN'],
-        ['Brindisi con il team','Il team era già pronto con i bicchieri. Da un\'ora.','BRINDISI CTO*-TEAM: MORALE AL MASSIMO STORICO'],
-        ['Spengo il PC (stavolta davvero)','Per la prima volta nella storia, nessun LED acceso sulla scrivania.','IL PC DEL CTO* È SPENTO: GLI ESPERTI INCREDULI'],
-        ['Dormo 14 ore, non mi pingate','Stato impostato su "non disturbare". Il team rispetta. Quasi.','IL CTO* È OFFLINE: SERVER IN MODALITÀ AUTOPILOTA'],
+        ['Brindisi con il team','Il team era già pronto con i bicchieri. Da un\'ora.','BRINDISI CON IL TEAM: MORALE AL MASSIMO STORICO'],
+        ['Spengo il PC (stavolta davvero)','Per la prima volta nella storia, nessun LED acceso sulla scrivania.','IL PC DI MATTIAS È SPENTO: GLI ESPERTI INCREDULI'],
+        ['Dormo 14 ore, non mi pingate','Stato impostato su "non disturbare". Il team rispetta. Quasi.','MATTIAS È OFFLINE: SERVER IN MODALITÀ AUTOPILOTA'],
       ]},
   ];
 
@@ -747,7 +747,7 @@
       <div class="reply"></div><div class="go"></div>`;
     chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
     chEl.scrollIntoView({behavior:'smooth',block:'center'});
-    say('<span class="who">SISTEMA ›</span> '+st.title.toLowerCase().replace(/^./,c=>c.toUpperCase())+'. Tocca a te, Mattia.');
+    say('<span class="who">SISTEMA ›</span> '+st.title.toLowerCase().replace(/^./,c=>c.toUpperCase())+'. Tocca a te, Mattias.');
     chEl.querySelectorAll('.choices .btn').forEach(b=>b.onclick=()=>{
       const o=st.opts[+b.dataset.k]; picks[st.key]=o[0];
       chEl.querySelectorAll('.choices .btn').forEach(x=>{x.disabled=true; if(x!==b) x.style.opacity=.35});
@@ -764,7 +764,7 @@
 
   function showReport(){
     chEl.innerHTML=`<div class="tag">CODE REVIEW · DAL TEAM</div>
-      <h2>MATTIA vNEXT · REVIEW ANNUALE</h2>
+      <h2>MATTIAS vNEXT · REVIEW ANNUALE</h2>
       <div class="report">
         <div class="big">
           <div class="kpi"><small>Esito</small><span>APPROVED ✓</span></div>
@@ -773,7 +773,7 @@
         </div>
         <h4>PUNTI DI FORZA</h4>
         <ul>
-          <li>CTO* affidabile: se qualcosa si rompe, sa già dove guardare</li>
+          <li>Affidabile: se qualcosa si rompe, sa già dove guardare</li>
           <li>Desiderio in backlog: <b>${picks.desiderio||'—'}</b></li>
           <li>Piano per la festa: <b>${picks.festa||'—'}</b></li>
           <li>Motto ufficiale: <b>${picks.motto||'—'}</b></li>
@@ -786,7 +786,7 @@
         </ul>
         <h4>CONCLUSIONE</h4>
         Codice pulito, uptime eccellente, ottimo compagno di squadra. Approvato per un altro anno in produzione.
-        <div class="end">BUON COMPLEANNO, MATTIA 🎂<br>— IL TUO TEAM</div>
+        <div class="end">BUON COMPLEANNO, MATTIAS 🎂<br>— IL TUO TEAM</div>
       </div>
       <div class="go"><button class="btn ghost" id="again">RICOMINCIA DAL DEPLOY</button></div>`;
     chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
@@ -823,9 +823,9 @@
 
     R(232,4,84,11,'#000'); R(233,5,82,9,C.redD);
     if(Math.floor(state.t*2)%2) R(236,8,3,3,C.red);
-    T('LIVE · CTO* AL LAVORO',277,5,9,C.white,'VT323','center');
+    T('LIVE · ADMIN AL LAVORO',277,5,9,C.white,'VT323','center');
     drawMonitor(state.t);
-    drawMattia(state.t);
+    drawMattias(state.t);
     drawDesk();
     drawSmoke(dt);
     drawParts(dt);

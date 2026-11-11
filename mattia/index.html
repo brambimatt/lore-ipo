@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B0F14" />
+<title>DEPLOY COMPLETATO · MATTIA vNEXT</title>
+<meta name="description" content="Una nuova versione di Mattia è in produzione. Buon compleanno!" />
+<meta property="og:title" content="DEPLOY COMPLETATO · MATTIA vNEXT" />
+<meta property="og:description" content="Una nuova versione di Mattia è in produzione. Buon compleanno!" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#05070a; --black:#0b0f14; --navy:#1b2a4a; --panel:#13213f;
+    --gold:#f5c542; --gold-dark:#9c7a1c; --green:#3bd16f; --green-dark:#1f7a40;
+    --red:#c62f35; --red-dark:#7a1c20; --white:#f4f4f4; --muted:#a9bccf;
+    --pixel:"Press Start 2P", ui-monospace, monospace; --led:"VT323", ui-monospace, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ink);color:var(--white);font-family:var(--led);}
+  body{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:16px 12px 40px;
+    background:radial-gradient(ellipse at top,#14213d 0%,var(--ink) 60%);}
+  .brand{font-family:var(--pixel);font-size:10px;color:var(--gold);letter-spacing:1px;margin:4px 0 12px;text-align:center;line-height:1.6}
+  .brand span{color:var(--muted)}
+  .wrap{width:100%;max-width:960px;position:relative}
+  .screen{position:relative;border:4px solid var(--gold);box-shadow:0 0 0 4px var(--black),0 0 40px rgba(245,197,66,.15);background:#000}
+  canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+  .crt{pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);mix-blend-mode:multiply}
+  .dialog{margin-top:14px;border:4px solid var(--navy);background:var(--black);padding:12px 14px;min-height:64px;font-size:24px;line-height:1.15;color:var(--white);box-shadow:0 0 0 4px var(--black)}
+  .dialog .who{color:var(--gold)}
+  .dialog .ok{color:var(--green)}
+  .caret{display:inline-block;width:10px;height:20px;background:var(--green);vertical-align:-3px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+  .btn{font-family:var(--pixel);font-size:12px;border:0;padding:14px 18px;cursor:pointer;color:var(--black);
+    background:var(--green);box-shadow:0 6px 0 var(--green-dark),0 0 0 4px var(--black);transform:translateY(0);transition:transform .05s}
+  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green-dark),0 0 0 4px var(--black)}
+  .btn.gold{background:var(--gold);box-shadow:0 6px 0 var(--gold-dark),0 0 0 4px var(--black)}
+  .btn.ghost{background:var(--navy);color:var(--white);box-shadow:0 6px 0 var(--panel),0 0 0 4px var(--black)}
+  .btn[disabled]{opacity:.4;cursor:not-allowed}
+  .start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+    background:rgba(5,7,10,.82);z-index:5;text-align:center;padding:16px}
+  .start h1{font-family:var(--pixel);font-size:clamp(16px,4vw,36px);margin:0;color:var(--gold);text-shadow:4px 4px 0 var(--gold-dark);line-height:1.4}
+  .start p{margin:0;font-size:clamp(18px,3vw,26px);color:var(--muted)}
+  .ticket{display:none;margin:22px auto 0;max-width:560px;background:#fbf8f1;color:#14213d;border:4px solid var(--black);
+    box-shadow:8px 8px 0 var(--gold);padding:18px 20px 22px;position:relative;font-size:22px}
+  .ticket.show{display:block;animation:pop .35s steps(4)}
+  @keyframes pop{from{transform:scale(.8) rotate(-2deg)}to{transform:none}}
+  .ticket h2{font-family:var(--pixel);font-size:13px;margin:0 0 4px;letter-spacing:1px;line-height:1.5;padding-right:140px}
+  .ticket .sub{color:#4f6280;font-size:18px;margin-bottom:12px}
+  .ticket table{width:100%;border-collapse:collapse}
+  .ticket td{padding:4px 0;border-bottom:2px dashed #d6cfbf;vertical-align:top}
+  .ticket td:first-child{color:#4f6280;width:42%}
+  .ticket td:last-child{text-align:right;font-weight:bold}
+  .ticket .up{color:var(--green-dark)}
+  .stamp{position:absolute;right:14px;top:10px;font-family:var(--pixel);font-size:11px;color:var(--green-dark);
+    border:3px solid var(--green-dark);padding:6px 8px;transform:rotate(8deg);background:rgba(59,209,111,.08)}
+  .note{margin-top:14px;font-size:22px;line-height:1.2}
+  .note b{font-family:var(--pixel);font-size:11px;display:block;margin-bottom:6px;color:var(--red)}
+  .sign{margin-top:12px;text-align:right;color:#4f6280}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--red);color:var(--white);
+    font-family:var(--pixel);font-size:11px;padding:12px 14px;box-shadow:0 0 0 4px var(--black);z-index:20;display:none;text-align:center;max-width:92vw;line-height:1.6}
+  .toast.show{display:block}
+  .skip{position:absolute;right:10px;top:10px;z-index:4;font-size:9px;padding:8px 10px}
+  .skip[hidden]{display:none}
+  .next{display:none;margin:18px auto 0;text-align:center}
+  .next.show{display:block}
+  .chapter{display:none;margin:22px auto 0;max-width:640px;border:4px solid var(--gold);background:var(--panel);padding:16px 18px 20px;box-shadow:0 0 0 4px var(--black)}
+  .chapter.show{display:block;animation:pop .3s steps(3)}
+  .chapter .tag{font-family:var(--pixel);font-size:9px;color:var(--muted);margin-bottom:8px;letter-spacing:1px}
+  .chapter h2{font-family:var(--pixel);font-size:14px;color:var(--gold);margin:0 0 12px;line-height:1.5}
+  .chapter .q{font-size:24px;line-height:1.2;margin-bottom:14px}
+  .chapter .q i{color:var(--muted);font-style:normal}
+  .chapter .choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .chapter .choices .btn{font-size:10px;line-height:1.5;padding:12px 10px;background:var(--white);color:var(--black);box-shadow:0 6px 0 #9aa7b8,0 0 0 4px var(--black)}
+  .chapter .choices .btn:hover{background:var(--gold)}
+  .chapter .reply{display:none;margin-top:16px;font-size:23px;line-height:1.2;border-left:6px solid var(--green);padding:6px 10px;background:rgba(59,209,111,.08)}
+  .chapter .reply.show{display:block}
+  .chapter .reply b{color:var(--gold);font-weight:normal}
+  .chapter .go{margin-top:16px;text-align:right}
+  .report{font-size:22px;line-height:1.25}
+  .report .big{display:flex;gap:12px;margin:6px 0 14px;flex-wrap:wrap}
+  .report .kpi{flex:1;min-width:130px;background:var(--black);border:3px solid var(--navy);padding:8px 10px}
+  .report .kpi small{display:block;color:var(--muted);font-size:17px}
+  .report .kpi span{font-family:var(--led);font-size:30px;color:var(--green)}
+  .report h4{font-family:var(--pixel);font-size:10px;margin:12px 0 6px;color:var(--gold)}
+  .report ul{margin:0;padding-left:20px}
+  .report .end{margin-top:16px;font-family:var(--pixel);font-size:12px;color:var(--green);text-align:center;line-height:1.8}
+  @media (max-width:560px){.chapter .choices{grid-template-columns:1fr}}
+  .order{display:none;margin:18px auto 0;max-width:560px;border:4px solid var(--green);background:var(--black);padding:14px 16px;box-shadow:0 0 0 4px var(--black),0 0 30px rgba(59,209,111,.25)}
+  .order.show{display:block;animation:pop .3s steps(3)}
+  .order h3{font-family:var(--pixel);font-size:12px;color:var(--green);margin:0 0 10px;animation:blink 1s steps(1) infinite}
+  .order .row{display:flex;justify-content:space-between;gap:12px;font-size:22px;border-bottom:2px dashed #1b2a4a;padding:3px 0}
+  .order .row span:first-child{color:var(--muted);white-space:nowrap}
+  .order .row span:last-child{color:var(--gold);text-align:right}
+  .order .btns{display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;min-height:54px;position:relative}
+  .btn.red{background:var(--red);color:var(--white);box-shadow:0 6px 0 var(--red-dark),0 0 0 4px var(--black)}
+</style>
+</head>
+<body>
+  <div class="brand">MATTIA.OS · TERMINALE DI SISTEMA · vNEXT<br><span>UTENTE: MATTIA SCHULBACH · CTO*</span></div>
+
+  <div class="wrap">
+    <div class="screen">
+      <canvas id="c" width="1280" height="720"></canvas>
+      <div class="crt"></div>
+      <button class="btn ghost skip" id="skip" hidden>SALTA ▶</button>
+      <div class="start" id="start">
+        <h1>MATTIA, C'È UN AGGIORNAMENTO PER TE</h1>
+        <p>Una nuova versione è pronta. Il deploy lo lanci tu.</p>
+        <button class="btn gold" id="go">AVVIA IL SISTEMA</button>
+      </div>
+    </div>
+
+    <div class="dialog" id="dialog"><span class="caret"></span></div>
+
+    <div class="controls">
+      <button class="btn gold" id="buy" disabled>🚀 LANCIA IL DEPLOY</button>
+      <button class="btn ghost" id="replay" disabled>RIVEDI</button>
+    </div>
+
+    <div class="order" id="order">
+      <h3>⚡ PULL REQUEST #1 IN ARRIVO</h3>
+      <div class="row"><span>Autore</span><span>Il team</span></div>
+      <div class="row"><span>Branch</span><span>feature/compleanno → main</span></div>
+      <div class="row"><span>Modifiche</span><span id="offer">+1 anno, +∞ auguri</span></div>
+      <div class="row"><span>Reviewer</span><span>Mattia Schulbach</span></div>
+      <div class="row"><span>Test</span><span>✅ tutti verdi</span></div>
+      <div class="btns">
+        <button class="btn" id="accept">MERGE</button>
+        <button class="btn red" id="refuse">RICHIEDI MODIFICHE</button>
+      </div>
+    </div>
+
+    <div class="ticket" id="ticket">
+      <div class="stamp">RILASCIATO</div>
+      <h2>RELEASE NOTES · MATTIA vNEXT</h2>
+      <div class="sub">Build stabile · in produzione da oggi</div>
+      <table>
+        <tr><td>Versione</td><td>quella di prima, +1</td></tr>
+        <tr><td>Ruolo</td><td>CTO* (*più o meno)</td></tr>
+        <tr><td>Contenuto della PR</td><td class="up" id="finalPrice">+1 anno, +∞ auguri</td></tr>
+        <tr><td>Nuove feature</td><td>saggezza +1, pazienza +1</td></tr>
+        <tr><td>Bug risolti</td><td>i lunedì mattina (in parte)</td></tr>
+        <tr><td>Performance</td><td class="up">invariate (ottime) ▲</td></tr>
+        <tr><td>Breaking changes</td><td>nessuno</td></tr>
+        <tr><td>Supporto</td><td>LTS · lunghissimo termine</td></tr>
+      </table>
+      <div class="note">
+        <b>MESSAGGIO DAL TEAM</b>
+        Grazie per tenere in piedi tutta la parte tech, anche quella che non si vede.
+        Se qualcosa funziona, di solito c'è dietro la tua mano.<br><br>
+        Buon compleanno, Mattia! 🎂
+      </div>
+      <div class="sign">— Matteo e tutto il team</div>
+    </div>
+    <div class="next" id="next"><button class="btn gold" id="nextBtn">CONTINUA ▶</button></div>
+    <div class="chapter" id="chapter"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const S = 4, W = 320, H = 180;
+  const cv = document.getElementById('c');
+  const g = cv.getContext('2d');
+  g.imageSmoothingEnabled = false;
+
+  const C = {
+    ink:'#05070a', black:'#0b0f14', navy:'#1b2a4a', panel:'#13213f',
+    gold:'#f5c542', goldD:'#9c7a1c', green:'#3bd16f', greenD:'#1f7a40',
+    red:'#e5484d', redD:'#7a1c20', white:'#f4f4f4', muted:'#a9bccf',
+    pink:'#ff4fd8', cyan:'#38c8ff'
+  };
+
+  // ---------- helpers ----------
+  const R = (x,y,w,h,c) => { g.fillStyle=c; g.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h)); };
+  const T = (s,x,y,size,c,font='VT323',align='left') => {
+    g.font = `${size}px "${font}"`; g.fillStyle=c; g.textAlign=align; g.textBaseline='top'; g.fillText(s,x,y);
+  };
+  let seed = 1112026;
+  const rnd = () => (seed = (seed*16807) % 2147483647) / 2147483647;
+
+  // ---------- skyline ----------
+  const buildings = [];
+  for (let x=-4; x<W; ) {
+    const w = 14 + Math.floor(rnd()*22), h = 40 + Math.floor(rnd()*90);
+    const wins = [];
+    for (let wy=H-h+6; wy<H-10; wy+=6) for (let wx=x+3; wx<x+w-3; wx+=5) wins.push({x:wx,y:wy,on:rnd()<.45,c:rnd()<.85?C.gold:(rnd()<.5?C.cyan:C.pink)});
+    buildings.push({x,w,h,wins, shade: rnd()<.5?'#0e1830':'#101d3a'});
+    x += w + 1;
+  }
+  const billboards = [{x:196,y:22,w:22,h:14,c:C.pink},{x:296,y:30,w:18,h:22,c:C.cyan},{x:186,y:44,w:12,h:18,c:C.gold}];
+
+  // ---------- sprite (Mattia, in felpa) ----------
+  const PAL = {H:'#4a2e1a',h:'#6b4528',S:'#f1c27d',s:'#d9a066',K:'#0b0f14',k:'#2c3e66',W:'#f4f4f4',T:C.green,t:C.greenD,J:'#24495a',j:'#173341',M:'#7a1c20',m:'#f4f4f4'};
+  const BODY = [
+    '....HHHHHHHH....',
+    '...HHhHHHHhHH...',
+    '..HHHHHHHHHHHH..',
+    '..HHSSSSSSSSHH..',
+    '..HSSSSSSSSSSH..',
+    '..SKKKKSSKKKKS..',
+    '..SKkKKKKKkKKS..',
+    '..SSKKSSSSKKSS..',
+    '...SSSSssSSSS...',
+    '...SSMmmmmMSS...',
+    '....SSMMMMSS....',
+    '......SssS......',
+    '..jJJJJJJJJJJj..',
+    '.JJJJWJJJJWJJJJ.',
+    '.JJJJWJJJJWJJJJ.',
+    '.JJJJJJJJJJJJJJ.',
+    'JJJJJTJJJJtJJJJJ',
+    'JJjJJJTTTtJJJJjJ',
+    'JJjJJJJJJJJJJjJJ',
+  ];
+  // cappellino da festa
+  function drawHat(cx,topY,el){
+    const cols=[C.pink,C.gold];
+    for(let r=0;r<14;r++){ const w=2+Math.floor(r*0.9)*2; R(cx-w/2-1,topY-14+r,w+2,1,'#000'); }
+    for(let r=0;r<14;r++){ const w=Math.floor(r*0.9)*2; if(w>0) R(cx-w/2,topY-14+r,w,1,cols[Math.floor((r+Math.floor(el*4))/3)%2]); }
+    R(cx-3,topY-19,6,6,'#000'); R(cx-2,topY-18,4,4,C.white);
+  }
+  const PX=3, MX=226, MY=55;
+  function drawMattia(t){
+    const bob = state.phase==='buy' ? (Math.floor(t*8)%2) : 0;
+    BODY.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
+      if(ch!=='.') R(MX+rx*PX-1, MY+ry*PX-(ry<12?bob:0)-1, PX+2, PX+2, '#000');
+    }));
+    BODY.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
+      if(ch==='.') return;
+      let col = PAL[ch];
+      if((ch==='k') && state.price>120) col = C.green;           // occhiali che riflettono il terminale
+      R(MX+rx*PX, MY+ry*PX - (ry<12?bob:0), PX, PX, col);
+    }));
+    if(state.hat) drawHat(MX+24, MY-bob+2, t);
+    // braccio destro (lato sinistro schermo) che preme DEPLOY
+    const down = state.press>0;
+    const armY = MY+12*PX, handY = down ? 111 : 106;
+    R(MX-4, armY, 8, handY-armY+9, '#000');
+    R(MX-3, armY, 6, handY-armY, PAL.J);
+    R(MX-3, armY, 2, handY-armY, PAL.j);
+    R(MX-4, handY, 8, 5, PAL.j);       // polsino
+    R(MX-3, handY+3, 7, 5, PAL.S);     // mano
+    // braccio sinistro appoggiato
+    const ax = MX+16*PX-3;
+    R(ax-2, armY, 9, 117-armY, '#000');
+    R(ax, armY, 6, 114-armY, PAL.J);
+    R(ax+4, armY, 2, 114-armY, PAL.j);
+    R(ax-1, 112, 8, 4, PAL.S);
+  }
+
+  // ---------- grafico ----------
+  const candles = [];
+  for(let i=0;i<24;i++) candles.push({o:100,c:100,h:100.4,l:99.6});
+  function tickChart(){
+    const last = candles[candles.length-1];
+    let o = last.c, c;
+    if(state.phase==='pre') c = 100 + (rnd()-.5)*.3;
+    else if(state.phase==='wait') c = o + (rnd()-.42)*1.6;
+    else if(state.phase==='buy') c = o + 2 + rnd()*state.momentum;
+    else if(state.phase==='halt') c = o;
+    else c = o + (rnd()-.3)*2;
+    c = Math.max(95,c);
+    candles.push({o,c,h:Math.max(o,c)+rnd()*1.2,l:Math.min(o,c)-rnd()*1.2});
+    if(candles.length>24) candles.shift();
+    state.price = c;
+  }
+  function drawMonitor(t){
+    const x=10,y=18,w=176,h=110;
+    R(x-3,y-3,w+6,h+6,'#000'); R(x-2,y-2,w+4,h+4,'#2b3a5c'); R(x,y,w,h,C.black);
+    R(x+w/2-10,y+h+3,20,6,'#2b3a5c'); R(x+w/2-20,y+h+9,40,3,'#2b3a5c');
+    T('mattia@prod:~$ hype', x+5, y+3, 12, C.green);
+    const up = state.price>=100;
+    const pct = ((state.price/100-1)*100);
+    const valStr = state.phase==='halt' ? 'LOCKED' : state.price.toFixed(0)+'%';
+    T(valStr, x+w-5, y+2, 16, state.phase==='halt'?C.red:(up?C.green:C.red), 'VT323','right');
+    T((pct>=0?'▲ +':'▼ ')+pct.toFixed(1)+'%', x+w-5, y+15, 10, up?C.green:C.red,'VT323','right');
+    const label = {pre:'IN ATTESA DI DEPLOY', wait:'PR IN REVIEW', buy:'DEPLOY IN CORSO...', done:'DEPLOY OK · vNEXT', halt:'ROLLBACK BLOCCATO'}[state.phase];
+    T(label, x+5, y+15, 10, state.phase==='halt'?C.red:C.muted);
+    for(let gy=y+32; gy<y+h-4; gy+=12) R(x+4,gy,w-8,1,'#132036');
+    const vis = candles; let mn=Infinity,mx=-Infinity;
+    vis.forEach(k=>{mn=Math.min(mn,k.l);mx=Math.max(mx,k.h)});
+    if(mx-mn<4){const m=(mx+mn)/2;mn=m-2;mx=m+2}
+    const top=y+30, bot=y+h-6, Y=v=>bot-(v-mn)/(mx-mn)*(bot-top);
+    vis.forEach((k,i)=>{
+      const cx = x+8+i*7, col = k.c>=k.o?C.green:C.red;
+      R(cx+2, Y(k.h), 1, Math.max(1,Y(k.l)-Y(k.h)), col);
+      const a=Y(Math.max(k.o,k.c)), b=Y(Math.min(k.o,k.c));
+      R(cx, a, 5, Math.max(2,b-a), col);
+    });
+    state.buyMarks.forEach(m=>{
+      const i = m - state.tickN + vis.length - 1;
+      if(i<0||i>=vis.length) return;
+      const cx=x+8+i*7, yy=Y(vis[i].l)+3;
+      R(cx,yy,5,7,C.gold); T('D',cx+1,yy-1,8,C.black);
+    });
+    if(state.phase==='halt' && Math.floor(t*3)%2===0){
+      R(x+20,y+50,w-40,26,C.redD); R(x+22,y+52,w-44,22,C.red);
+      T('ACCESSO NEGATO', x+w/2, y+53, 12, C.white,'VT323','center');
+      T('l\'età è in sola lettura', x+w/2, y+63, 10, C.white,'VT323','center');
+    }
+  }
+
+  // ---------- scrivania, papera, torta ----------
+  const cakeC=[true,true,true,true,true];
+  function drawCake(t){
+    const x=278,y=98;
+    R(x-1,y-1,40,16,'#000');
+    R(x,y,38,14,'#f6d7e6'); R(x,y,38,4,C.white);
+    for(let i=0;i<38;i+=6) R(x+i,y+4,3,2,C.white);
+    R(x,y+8,38,2,C.pink);
+    [3,10,17,24,31].forEach((cx,i)=>R(x+cx+1,y+10,2,2,[C.gold,C.cyan,C.green,C.pink,C.gold][i]));
+    R(x-3,y+13,44,2,'#ccc');
+    cakeC.forEach((lit,i)=>{
+      const cx=x+4+i*7;
+      R(cx-1,y-9,4,9,'#000'); R(cx,y-8,2,8,[C.cyan,C.pink,C.gold,C.green,C.cyan][i]);
+      if(lit){
+        const f=Math.floor(t*10+i)%2;
+        R(cx-1+(f?0:1),y-14,3,4,C.gold); R(cx+(f?0:1),y-15,1,2,'#fff6c8'); R(cx,y-12,1,2,C.red);
+      }
+    });
+  }
+  function drawDesk(){
+    R(0,112,W,56,'#2b1d14'); R(0,112,W,3,'#5a3d28'); R(0,115,W,1,'#1a110b');
+    // pulsante DEPLOY
+    const pressed = state.press>0;
+    R(212,116,26,7,'#111'); R(213,117,24,5,'#333');
+    R(216, pressed?115:112, 18, pressed?3:5, C.red);
+    R(216, pressed?115:112, 18, 1, '#ff9da0');
+    R(204,128,42,10,C.gold); R(205,129,40,8,C.goldD); T('DEPLOY',225,128,10,C.black,'VT323','center');
+    // paperella da debug
+    R(193,104,12,8,'#000'); R(194,105,10,7,'#ffd23f'); R(196,100,7,6,'#000'); R(197,101,5,5,'#ffd23f');
+    R(201,102,1,1,'#000'); R(202,103,3,2,'#ff8a00');
+    if(state.cake) drawCake(state.t);
+    else {
+      R(286,100,11,12,C.white); R(297,103,3,6,C.white); R(298,104,1,4,'#2b1d14');
+      R(286,104,11,3,C.green); T('</>',287,104,8,C.black);
+      if(Math.floor(state.t*2)%2) {R(289,95,1,3,'#556'); R(292,93,1,4,'#556');} else {R(290,94,1,3,'#556'); R(293,95,1,3,'#556');}
+    }
+    // targhetta
+    R(36,140,124,16,'#14100c'); R(37,141,122,14,C.goldD); R(38,142,120,12,'#d8b24a');
+    T('MATTIA SCHULBACH · CTO*', 98, 143, 11, '#2b1d14','VT323','center');
+  }
+
+  // ---------- nastro scorrevole ----------
+  let tape = '  MATTIA vNEXT ▲ IN PRODUZIONE  ·  BUON COMPLEANNO MATTIA  ·  CTO* (*PIÙ O MENO)  ·  ZERO BUG NOTI  ·  UPTIME: TUTTA LA VITA  ·  AUGURI DAL TEAM  ·';
+  function drawTape(t){
+    R(0,168,W,12,'#000'); R(0,168,W,1,C.gold);
+    g.font='11px "VT323"'; const tw = g.measureText(tape).width;
+    const off = -((t*30)%tw);
+    for(let k=0;k<3;k++) T(tape, off+k*tw, 169, 11, C.gold);
+  }
+
+  // ---------- coriandoli, fumo, scritte ----------
+  const parts=[];
+  function burst(n=40){
+    const cols=[C.gold,C.green,C.pink,C.cyan,C.white];
+    for(let i=0;i<n;i++) parts.push({x:60+Math.random()*240,y:-5-Math.random()*40,vx:(Math.random()-.5)*20,vy:20+Math.random()*30,c:cols[i%cols.length],life:4});
+  }
+  function drawParts(dt){
+    for(let i=parts.length-1;i>=0;i--){const p=parts[i]; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=dt; if(p.life<=0||p.y>H){parts.splice(i,1);continue} R(p.x,p.y,2,2,p.c)}
+  }
+  const smoke=[];
+  function puff(x,y){ for(let i=0;i<6;i++) smoke.push({x:x+(Math.random()-.5)*3,y,vx:(Math.random()-.5)*6,vy:-10-Math.random()*10,life:1+Math.random()*.6}); }
+  function drawSmoke(dt){
+    for(let i=smoke.length-1;i>=0;i--){const p=smoke[i]; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=dt; if(p.life<=0){smoke.splice(i,1);continue}
+      g.globalAlpha=Math.min(.8,p.life*.6); R(p.x,p.y,2,2,'#9aa1ab'); g.globalAlpha=1; }
+  }
+  const floats=[];
+  function floatText(s,c){floats.push({s,c,x:206+Math.random()*30,y:100,life:1.2})}
+  function drawFloats(dt){
+    for(let i=floats.length-1;i>=0;i--){const f=floats[i]; f.y-=24*dt; f.life-=dt; if(f.life<=0){floats.splice(i,1);continue} T(f.s,f.x,f.y,12,f.c,'VT323','center')}
+  }
+
+  // ---------- audio ----------
+  let ac=null;
+  function beep(freq,dur=.12,type='square',vol=.06,when=0){
+    if(!ac) return; const o=ac.createOscillator(), v=ac.createGain();
+    o.type=type; o.frequency.value=freq; v.gain.setValueAtTime(vol,ac.currentTime+when);
+    v.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+when+dur);
+    o.connect(v).connect(ac.destination); o.start(ac.currentTime+when); o.stop(ac.currentTime+when+dur+.02);
+  }
+  // "Tanti auguri a te" in versione 8-bit
+  function jingle(){
+    const q=.3, N=[[392,.75],[392,.25],[440,1],[392,1],[523,1],[494,2],[392,.75],[392,.25],[440,1],[392,1],[587,1],[523,2]];
+    let w=0; N.forEach(([f,d])=>{ beep(f,d*q*.9,'square',.05,w); beep(f/2,d*q*.9,'triangle',.05,w); w+=d*q; });
+  }
+  const chime=()=>{[0,.25,.5].forEach(w=>{beep(1318,.6,'sine',.12,w);beep(1975,.4,'sine',.05,w)})};
+  const kaching=()=>{beep(988,.08,'square',.05);beep(1318,.25,'square',.05,.07)};
+  const whoosh=()=>{beep(300,.18,'triangle',.06);beep(180,.2,'triangle',.04,.05)};
+
+  // ---------- dialogo ----------
+  const dlg=document.getElementById('dialog');
+  let typing=null;
+  function say(html){
+    clearInterval(typing);
+    const tmp=document.createElement('div'); tmp.innerHTML=html;
+    const full=tmp.textContent; let i=0;
+    typing=setInterval(()=>{
+      i+=2;
+      if(i>=full.length){clearInterval(typing); dlg.innerHTML=html+' <span class="caret"></span>'; return}
+      dlg.textContent=full.slice(0,i);
+    },22);
+  }
+
+  // ---------- sprite generico ----------
+  function drawSprite(rows,pal,x,y,px,talkClosed){
+    rows.forEach((row,ry)=>[...row].forEach((ch,rx)=>{ if(ch!=='.') R(x+rx*px-1,y+ry*px-1,px+2,px+2,'#000'); }));
+    rows.forEach((row,ry)=>[...row].forEach((ch,rx)=>{
+      if(ch==='.') return;
+      let c=ch;
+      if(talkClosed){ if(c==='m') c='M'; else if(ry===10 && c==='M') c='S'; }
+      R(x+rx*px,y+ry*px,px,px,pal[c]);
+    }));
+  }
+  const HOST_ROWS=[
+    '....HHHHHHHH....',
+    '..HHHHHHHHHHHH..',
+    '..HHhHHHHHhHHH..',
+    '..HHSSSSSSSSHH..',
+    '..HSSSSSSSSSSH..',
+    '..SSEESSSSEESS..',
+    '..SSSSSssSSSSS..',
+    '...SSSSssSSSS...',
+    '...SSMmmmmMSS...',
+    '....SSMMMMSS....',
+    '......SssS......',
+    '...JJJWWWWJJJ...',
+    '..JJJJWTTWJJJJ..',
+    '.JJJJJWTTWJJJJJ.',
+    '.JJJJJJTTJJJJJJ.',
+    'JJJJJJJTtJJJJJJJ',
+    'JJjJJJJTtJJJJjJJ',
+    'JJjJJJJJJJJJJjJJ',
+    'JJjJJJJJJJJJJjJJ',
+  ];
+  const HOST_PAL={H:'#c9ced6',h:'#9aa1ab',S:'#f1c27d',s:'#d9a066',E:'#0b0f14',M:'#7a1c20',m:'#f4f4f4',J:'#1b2a4a',j:'#0f1a33',W:'#f4f4f4',T:C.gold,t:C.goldD};
+
+  // ---------- fuochi d'artificio ----------
+  const rockets=[], sparks=[];
+  let noiseBuf=null;
+  function pop(){
+    if(!ac) return;
+    if(!noiseBuf){ noiseBuf=ac.createBuffer(1,ac.sampleRate*.4,ac.sampleRate); const d=noiseBuf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,3); }
+    const src=ac.createBufferSource(), v=ac.createGain(); src.buffer=noiseBuf; v.gain.value=.18; src.connect(v).connect(ac.destination); src.start();
+  }
+  function launch(){
+    const cols=[C.gold,C.green,C.pink,C.cyan,C.red,C.white];
+    rockets.push({x:30+Math.random()*260,y:150,vy:-110-Math.random()*40,ty:20+Math.random()*50,c:cols[Math.floor(Math.random()*cols.length)]});
+  }
+  function updFireworks(dt){
+    for(let i=rockets.length-1;i>=0;i--){ const r=rockets[i]; r.y+=r.vy*dt;
+      R(r.x,r.y,1,3,'#ffe9a8');
+      if(r.y<=r.ty){ rockets.splice(i,1); pop();
+        const n=34; for(let k=0;k<n;k++){ const a=k/n*Math.PI*2, sp=35+Math.random()*25; sparks.push({x:r.x,y:r.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,c:r.c,life:1.3}); } } }
+    for(let i=sparks.length-1;i>=0;i--){ const p=sparks[i]; p.vy+=40*dt; p.vx*=.985; p.x+=p.vx*dt; p.y+=p.vy*dt; p.life-=dt;
+      if(p.life<=0){sparks.splice(i,1);continue}
+      g.globalAlpha=Math.min(1,p.life*1.4); R(p.x,p.y,2,2,p.c); g.globalAlpha=1; }
+  }
+
+  // città di notte (livelli)
+  const cityBack=[], cityFront=[];
+  for(let x=0;x<W;){ const w=10+Math.floor(rnd()*16); cityBack.push({x,w,h:50+Math.floor(rnd()*60)}); x+=w; }
+  for(let x=0;x<W;){ const w=14+Math.floor(rnd()*20); const h=30+Math.floor(rnd()*55); const wins=[];
+    for(let wy=150-h+4;wy<146;wy+=5) for(let wx=x+2;wx<x+w-2;wx+=4) if(rnd()<.5) wins.push([wx,wy]);
+    cityFront.push({x,w,h,wins}); x+=w+2; }
+
+  // ---------- scena: deploy riuscito, festa ----------
+  function drawParty(dt,el){
+    const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,'#0a0620'); sky.addColorStop(1,'#3a1650');
+    g.fillStyle=sky; g.fillRect(0,0,W,H);
+    for(let i=0;i<50;i++){ const sx=(i*97)%W, sy=(i*41)%90; if((Math.floor(el*3)+i)%9) R(sx,sy,1,1,'#5a4a80'); }
+    // torre-server con antenna
+    const tx=150; R(tx+12,8,2,22,'#2a2340'); R(tx+9,30,8,10,'#241d38'); R(tx+5,40,16,16,'#211a34'); R(tx,56,26,94,'#1d1730');
+    for(let wy=60;wy<146;wy+=5) for(let wx=tx+3;wx<tx+24;wx+=4) if(((wx*7+wy*3+Math.floor(el*6))>>2)%3) R(wx,wy,2,2,((wx+wy)>>2)%4?'#3bd16f99':'#f5c54299');
+    R(tx+12,6,2,2,(Math.floor(el*4)%2)?C.red:'#400');
+    cityBack.forEach(b=>R(b.x,150-b.h,b.w,b.h,'#1a1430'));
+    updFireworks(dt);
+    cityFront.forEach(b=>{ R(b.x,150-b.h,b.w,b.h,'#120e22'); b.wins.forEach(([wx,wy])=>R(wx,wy,2,2,'#f5c54266')); });
+    // maxi schermo LED con barra di avanzamento
+    const bx=212,by=78; R(bx-2,by-2,96,34,'#000'); R(bx,by,92,30,'#081018');
+    const prog=Math.min(1,el/1.6);
+    if(prog<1){
+      T('DEPLOY...',bx+46,by+1,14,C.green,'VT323','center');
+      R(bx+6,by+18,80,7,'#1b2a4a'); R(bx+6,by+18,Math.floor(80*prog),7,C.green);
+    } else {
+      const on=Math.floor(el*3)%2;
+      T('MATTIA',bx+46,by+1,16,on?C.gold:C.green,'VT323','center');
+      T('▲ vNEXT · 100% OK',bx+46,by+16,11,C.green,'VT323','center');
+    }
+    // fiume con riflessi
+    R(0,150,W,30,'#07091a');
+    for(let i=0;i<28;i++){ const rx=(i*53+Math.floor(el*20))%W, ry=152+(i*7)%26; R(rx,ry,6+(i%4)*3,1,[C.gold,C.pink,C.cyan,C.green][i%4]+'66'); }
+    // terrazza + Mattia che esulta col cappellino
+    R(0,138,96,12,'#0b0816'); R(0,138,96,1,'#3a2a50');
+    const lx=34, ly=138-19*3+ (Math.floor(el*6)%2);
+    drawSprite(BODY,PAL,lx,ly,3,false);
+    drawHat(lx+24,ly+2,el);
+    R(lx-5,ly+12*3-24,7,26,'#000'); R(lx-4,ly+12*3-23,5,24,PAL.J); R(lx-5,ly+12*3-29,7,6,'#000'); R(lx-4,ly+12*3-28,5,5,PAL.S);
+    R(lx+48-2,ly+12*3,7,22,'#000'); R(lx+48-1,ly+12*3,5,20,PAL.J);
+    // titolo
+    if(el>1.8){
+      const vis = el<2.5 ? (Math.floor(el*10)%2) : 1;
+      if(vis){
+        R(70,8,180,40,'#000'); R(72,10,176,36,C.gold); R(74,12,172,32,C.black);
+        T('BUON COMPLEANNO!',160,17,10,C.gold,'Press Start 2P','center');
+        T('MATTIA SCHULBACH · CTO*',160,32,11,C.white,'VT323','center');
+      }
+    }
+    if(el<0.4){ g.globalAlpha=1-el/0.4; R(0,0,W,H,'#fff'); g.globalAlpha=1; }
+    if(el>1.6 && Math.random()<dt*3.2) launch();
+  }
+
+  // ---------- intervista ----------
+  const INTERVIEW=[
+    ['GIORNALISTA','In diretta con Mattia Schulbach, CTO dell\'azienda. Anzi... CTO?'],
+    ['MATTIA','Diciamo CTO-ish. Curo la parte tech. E quando serve aggiusto la stampante.'],
+    ['GIORNALISTA','Oggi è il suo compleanno. Come si sente?'],
+    ['MATTIA','Un anno di esperienza in più e zero bug noti. Per ora.'],
+    ['GIORNALISTA','Il segreto per restare giovani?'],
+    ['MATTIA','Caffè, dark mode e mai aprire le email il venerdì sera.'],
+    ['GIORNALISTA','Aspetti, ci dicono dalla regia... BREAKING NEWS!'],
+  ];
+  let acc2=0; const ivStart=[]; INTERVIEW.forEach(l=>{ ivStart.push(acc2); acc2+=1.4+l[1].length*0.042; });
+  const IV_TOTAL=acc2+1.6;
+  function wrap(text,maxW,size){
+    g.font=`${size}px "VT323"`; const words=text.split(' '), lines=[]; let cur='';
+    words.forEach(w=>{ const t=cur?cur+' '+w:w; if(g.measureText(t).width>maxW && cur){lines.push(cur);cur=w}else cur=t; }); if(cur) lines.push(cur); return lines;
+  }
+  function drawInterview(dt,el){
+    R(0,0,W,H,'#0c1224');
+    R(14,8,292,112,'#000');
+    const sky=g.createLinearGradient(0,10,0,118); sky.addColorStop(0,'#0a0620'); sky.addColorStop(1,'#2a1446');
+    g.fillStyle=sky; g.fillRect(16,10,288,108);
+    cityBack.forEach(b=>{ const x=16+b.x*0.9; if(x<300) R(x,118-b.h*0.8,Math.min(b.w*0.9,304-x),b.h*0.8,'#1a1430'); });
+    cityFront.forEach(b=>{ const x=16+b.x*0.9; if(x<300){ R(x,118-b.h*0.7,Math.min(b.w*0.9,304-x),b.h*0.7,'#120e22'); } });
+    g.save(); g.beginPath(); g.rect(16,10,288,108); g.clip();
+    updFireworks(dt); if(Math.random()<dt*1.2) { launch(); rockets[rockets.length-1].ty=20+Math.random()*30; }
+    g.restore();
+    for(let x=16;x<304;x+=72) R(x,10,2,108,'#1b2236');
+    R(16,62,288,2,'#1b2236');
+    R(126,16,68,28,'#000'); R(128,18,64,24,'#081018'); T('MATTIA ▲',160,19,11,C.green,'VT323','center'); T('vNEXT',160,29,11,C.gold,'VT323','center');
+    R(0,120,W,60,'#141b30'); for(let x=0;x<W;x+=20) R(x,120,1,60,'#1b2440');
+    let idx=0; for(let i=0;i<INTERVIEW.length;i++) if(el>=ivStart[i]) idx=i;
+    const [who,txt]=INTERVIEW[idx];
+    const typing = (el-ivStart[idx])*24 < txt.length;
+    const mouth = Math.floor(el*8)%2===0;
+    drawSprite(HOST_ROWS,HOST_PAL,52,66,3, !(who==='GIORNALISTA' && typing && mouth));
+    drawSprite(BODY,PAL,214,62,3, !(who==='MATTIA' && typing && mouth));
+    drawHat(238,64,el);
+    const toM = who!=='GIORNALISTA';
+    const mx = toM?188:118;
+    R(96,100,mx-96,6,'#000'); R(96,101,mx-96,4,HOST_PAL.J); R(mx-2,99,6,7,'#000'); R(mx-1,100,4,5,HOST_PAL.S);
+    R(mx+2,94,3,10,'#333'); R(mx,86,7,9,'#000'); R(mx+1,87,5,7,'#555'); R(mx-1,94,9,6,C.red); T('8B',mx+3,94,7,C.white,'VT323','center');
+    R(6,6,74,12,C.red); T('8-BIT TECH NEWS',43,7,10,C.white,'VT323','center');
+    R(82,6,70,12,'#000'); if(Math.floor(el*2)%2) R(85,10,4,4,C.red); T('LIVE · IN UFFICIO',120,7,10,C.white,'VT323','center');
+    R(0,122,W,46,'#000');
+    R(4,124,24,10,C.red); T('LIVE',16,124,10,C.white,'VT323','center');
+    R(28,124,288,10,C.gold); T('MATTIA SCHULBACH · CTO* (PIÙ O MENO) · FESTEGGIATO DEL GIORNO',32,124,10,C.black);
+    R(4,136,312,30,'#0b0f14');
+    const shown = txt.slice(0,Math.floor((el-ivStart[idx])*24));
+    T(who+':',8,137,10,who==='MATTIA'?C.gold:C.cyan);
+    wrap(shown,300,11).slice(0,2).forEach((ln,i)=>T(ln,8,146+i*9,11,C.white));
+    drawTape(el);
+    if(el>ivStart[INTERVIEW.length-1]+1.2){
+      if(Math.floor(el*5)%2){ R(0,64,W,30,'#000'); R(0,66,W,26,C.red); T('BREAKING: PULL REQUEST IN ARRIVO',160,70,9,C.white,'Press Start 2P','center'); T('il team ha qualcosa per te',160,81,11,C.white,'VT323','center'); }
+    }
+  }
+
+  // ---------- stato e storia ----------
+  const state={scene:'desk',sceneT:0,phase:'pre',price:100,press:0,momentum:3,tickN:0,buyMarks:[],t:0,hat:false,cake:false};
+  const buyBtn=document.getElementById('buy'), replayBtn=document.getElementById('replay');
+  const ticket=document.getElementById('ticket'), toast=document.getElementById('toast');
+  let timers=[];
+  const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
+
+  function press(){
+    state.press=0.18; state.buyMarks.push(state.tickN); kaching();
+    floatText(['DEPLOY!','+1','SHIP IT','LGTM','AUGURI!'][Math.floor(Math.random()*5)], C.green);
+  }
+
+  const orderEl=document.getElementById('order'), offerEl=document.getElementById('offer');
+  const acceptBtn=document.getElementById('accept'), refuseBtn=document.getElementById('refuse');
+  const OFFERS=['+1 anno, +∞ auguri','+1 anno, +∞ auguri, + torta','+1 anno, +∞ auguri, + torta, + aperitivo','+1 anno, +∞ auguri, + torta, + aperitivo, + un giorno senza riunioni'];
+  const NO=[
+    '«Rollback non consentito: l\'età è un campo in sola lettura.»',
+    '«Errore 403: non hai i permessi per tornare indietro nel tempo.»',
+    '«git revert fallito: troppi bei ricordi in conflitto.»',
+    '«Il backup dell\'anno scorso è corrotto. Meglio così.»',
+    '«Ctrl+Z non funziona sulla vita reale. Abbiamo controllato.»'
+  ];
+  let mode='deploy', refusals=0, rollbacks=0, relit=false;
+  function showToast(html,ms=3500){ toast.innerHTML=html; toast.classList.add('show'); clearTimeout(state.tt); state.tt=setTimeout(()=>toast.classList.remove('show'),ms); }
+
+  function story(){
+    timers.forEach(clearTimeout); timers=[];
+    Object.assign(state,{phase:'pre',price:100,momentum:3,buyMarks:[],hat:false,cake:false});
+    cakeC.fill(true); relit=false;
+    candles.length=0; for(let i=0;i<24;i++) candles.push({o:100,c:100,h:100.4,l:99.6});
+    ticket.classList.remove('show'); orderEl.classList.remove('show'); toast.classList.remove('show'); resetChapters();
+    refusals=0; rollbacks=0; offerEl.textContent=OFFERS[0]; refuseBtn.style.display=''; refuseBtn.style.transform='';
+    cine.forEach(clearTimeout); cine=[]; state.scene='desk'; skipBtn.hidden=true; rockets.length=0; sparks.length=0;
+    mode='deploy'; buyBtn.textContent='🚀 LANCIA IL DEPLOY'; buyBtn.className='btn gold'; buyBtn.disabled=false; replayBtn.disabled=true;
+    say('<span class="who">SISTEMA ›</span> 23:59:59 · Mattia, c\'è un aggiornamento importante in coda: <b>mattia-vNEXT</b>. Lancia tu il deploy.');
+  }
+
+  const skipBtn=document.getElementById('skip');
+  let cine=[];
+  const cat=(ms,fn)=>cine.push(setTimeout(fn,ms));
+  function setScene(sc){ state.scene=sc; state.sceneT=0; }
+  function startDeploy(){
+    buyBtn.disabled=true; replayBtn.disabled=true;
+    kaching(); setScene('party'); skipBtn.hidden=false; state.hat=true;
+    cat(1700,()=>{ jingle(); for(let i=0;i<5;i++) setTimeout(launch,i*120); });
+    document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
+    say('<span class="who">SISTEMA ›</span> Deploy in corso... <span class="ok">100%. Mattia vNEXT è in produzione. Buon compleanno!</span>');
+    cat(7500,()=>{ setScene('interview'); say('<span class="who">8-BIT TECH NEWS ›</span> In diretta: l\'intervista al festeggiato del giorno.'); });
+    cat(7500+IV_TOTAL*1000,toDesk);
+  }
+  function toDesk(){
+    cine.forEach(clearTimeout); cine=[]; skipBtn.hidden=true; state.hat=true;
+    setScene('desk'); state.phase='wait'; kaching();
+    say('<span class="who">GIT ›</span> ⚡ Nuova pull request da parte del team. Reviewer: tu. Fai il merge?');
+    orderEl.classList.add('show'); setTimeout(()=>orderEl.scrollIntoView({behavior:'smooth',block:'center'}),200);
+  }
+  skipBtn.onclick=toDesk;
+
+  refuseBtn.onclick=()=>{
+    refusals++;
+    if(refusals<OFFERS.length){
+      offerEl.textContent=OFFERS[refusals]; press(); state.phase='buy'; state.momentum+=2;
+      setTimeout(()=>{ if(state.phase==='buy') state.phase='wait' },700);
+      say('<span class="who">IL TEAM ›</span> «Modifiche fatte.» Nuova versione della PR: '+OFFERS[refusals]+'.');
+      refuseBtn.style.transform=`translate(${(Math.random()-.5)*160}px,${(Math.random()-.5)*20}px) scale(${1-refusals*.2})`;
+    } else {
+      refuseBtn.style.display='none'; beep(220,.4,'sawtooth',.05);
+      say('<span class="who">CI ›</span> Il pulsante RICHIEDI MODIFICHE è stato rimosso: la PR è già perfetta.');
+    }
+  };
+
+  acceptBtn.onclick=()=>{
+    orderEl.classList.remove('show');
+    document.querySelector('.screen').scrollIntoView({behavior:'smooth',block:'center'});
+    state.phase='buy'; say('<span class="who">MATTIA ›</span> «LGTM. Merge. Deploy. Subito.»');
+    [100,350,600,850,1100,1350,1600].forEach(ms=>at(ms,()=>{press(); state.momentum+=1.3}));
+    at(2300,merged);
+  };
+  function merged(){
+    state.phase='done'; state.cake=true; burst(60); chime();
+    document.getElementById('finalPrice').textContent=OFFERS[Math.min(refusals,OFFERS.length-1)];
+    say('<span class="ok">MERGE COMPLETATO.</span> Sulla scrivania è comparsa una torta. Esprimi un desiderio e spegni le candeline.');
+    mode='candles'; buyBtn.textContent='🎂 SOFFIA SULLE CANDELINE'; buyBtn.className='btn gold'; buyBtn.disabled=false;
+  }
+  function blowCandle(){
+    const i=cakeC.indexOf(true); if(i<0) return;
+    cakeC[i]=false; puff(278+4+i*7+1,84); whoosh(); state.press=0.12;
+    if(cakeC.indexOf(true)>=0) return;
+    buyBtn.disabled=true;
+    if(!relit){
+      relit=true;
+      setTimeout(()=>{
+        cakeC[1]=true; cakeC[3]=true; beep(220,.3,'sawtooth',.05);
+        say('<span class="who">SISTEMA ›</span> ⚠ Bug in produzione: due candeline si sono riaccese da sole. Serve un hotfix.');
+        buyBtn.textContent='🎂 HOTFIX: SOFFIA ANCORA'; buyBtn.disabled=false;
+      },1000);
+    } else setTimeout(celebrate,500);
+  }
+  function celebrate(){
+    burst(120); jingle(); for(let i=0;i<3;i++) setTimeout(()=>burst(30),i*500);
+    say('<span class="ok">HOTFIX RIUSCITO.</span> Tutte le candeline sono spente. Il desiderio è in coda di esecuzione. Auguri, Mattia!');
+    ticket.classList.add('show'); setTimeout(()=>ticket.scrollIntoView({behavior:'smooth',block:'center'}),100);
+    setTimeout(()=>document.getElementById('next').classList.add('show'),1200);
+    mode='rollback'; buyBtn.textContent='⏪ ROLLBACK DELL\'ETÀ'; buyBtn.className='btn ghost'; buyBtn.disabled=false; replayBtn.disabled=false;
+  }
+
+  buyBtn.onclick=()=>{
+    if(mode==='deploy') return startDeploy();
+    if(mode==='candles') return blowCandle();
+    rollbacks++;
+    if(rollbacks<=NO.length){
+      say('<span class="who">SISTEMA ›</span> '+NO[rollbacks-1]);
+      press(); state.phase='buy'; state.momentum+=1.5;
+      clearTimeout(state.back); state.back=setTimeout(()=>{ if(state.phase==='buy') state.phase='done' },800);
+    }
+    if(rollbacks===NO.length){
+      clearTimeout(state.back);
+      state.phase='halt'; buyBtn.disabled=true; beep(220,.5,'sawtooth',.06);
+      showToast('ROLLBACK RESPINTO<br>Gli anni non si annullano.<br>Si festeggiano. Auguri!',4000);
+      setTimeout(()=>{ state.phase='done'; rollbacks=0; buyBtn.disabled=false },4000);
+    }
+  };
+  replayBtn.onclick=story;
+
+  // ---------- capitoli extra ----------
+  const chEl=document.getElementById('chapter'), nextWrap=document.getElementById('next');
+  const BASE_TAPE=tape;
+  const picks={};
+  function headline(h){ tape+='  '+h+'  ·'; }
+  function bump(n=3){ press(); state.phase='buy'; state.momentum+=n; setTimeout(()=>{ if(state.phase==='buy') state.phase='done' },900); }
+  function resetChapters(){ chEl.classList.remove('show'); chEl.innerHTML=''; nextWrap.classList.remove('show'); tape=BASE_TAPE; for(const k in picks) delete picks[k]; }
+
+  const STEPS=[
+    { tag:'CAPITOLO 2 · 1/4', title:'IL DESIDERIO', key:'desiderio',
+      q:'Le candeline sono spente. <i>Quale desiderio metti nel backlog?</i>',
+      opts:[
+        ['Zero bug in produzione','Desiderio inserito con priorità massima. Tempo stimato: per sempre.','DESIDERIO PRIORITÀ MASSIMA: ZERO BUG. STIMA: INFINITA'],
+        ['Un weekend senza notifiche','Slack in silenzioso per 48 ore. Il team promette di provarci.','48 ORE SENZA NOTIFICHE: IL TEAM CI PROVA'],
+        ['Un monitor in più','Approvato. La scrivania ora sembra la sala controllo della NASA.','APPROVATO IL TERZO MONITOR'],
+        ['Niente deploy il venerdì','Regola scolpita nella pietra. Anzi, nel README.','NIENTE DEPLOY IL VENERDÌ: ORA È LEGGE'],
+      ]},
+    { tag:'CAPITOLO 3 · 2/4', title:'LA FESTA', key:'festa',
+      q:'Il team vuole festeggiare. <i>Dove si va?</i>',
+      opts:[
+        ['Aperitivo','Il bar sotto l\'ufficio registra un picco di traffico mai visto.','APERITIVO DEL CTO*: SERVER DEL BAR IN DIFFICOLTÀ'],
+        ['Pizza tutti insieme','Ordine inviato. La pizzeria chiede se è un attacco DDoS.','ORDINE DI PIZZE RECORD: LA PIZZERIA SCALA I FORNI'],
+        ['LAN party come nel 2005','Cavi ethernet ovunque. Qualcuno ha portato un CRT da 30 kg.','RITORNA IL LAN PARTY: CAVI ETHERNET ESAURITI'],
+        ['Torta in ufficio, poi si lavora','Il team applaude. Poi riapre il portatile. Poi lo richiude.','TORTA IN UFFICIO: PRODUTTIVITÀ IN PAUSA'],
+      ]},
+    { tag:'CAPITOLO 3 · 3/4', title:'CONFERENZA STAMPA', key:'motto',
+      q:'<b>Wired 8-bit</b> <i>— «Il suo motto da CTO*?»</i>',
+      opts:[
+        ['«Hai provato a spegnere e riaccendere?»','Funziona nel 90% dei casi. Il restante 10% lo sistema lui.','SPEGNI E RIACCENDI: IL METODO CHE NON SBAGLIA'],
+        ['«In locale funziona»','La sala stampa annuisce. Tutti l\'hanno detto almeno una volta.','«IN LOCALE FUNZIONA»: FRASE DELL\'ANNO'],
+        ['«Non è un bug, è una feature»','Gli investitori prendono appunti e chiedono più feature.','NON È UN BUG, È UNA FEATURE: INVESTITORI CONVINTI'],
+        ['«Lo sistemo dopo»','Il "dopo" è già in calendario. Per il prossimo trimestre.','«LO SISTEMO DOPO»: IL TICKET È APERTO DAL 2019'],
+      ]},
+    { tag:'CAPITOLO 4 · 4/4', title:'SPEGNIMENTO', key:'chiusura',
+      q:'Fine della giornata. <i>Come chiudi il compleanno?</i>',
+      opts:[
+        ['git commit -m "anno fantastico"','Commit firmato e pushato. Il changelog dell\'anno è perfetto.','COMMIT DELL\'ANNO PUSHATO SU MAIN'],
+        ['Brindisi con il team','Il team era già pronto con i bicchieri. Da un\'ora.','BRINDISI CTO*-TEAM: MORALE AL MASSIMO STORICO'],
+        ['Spengo il PC (stavolta davvero)','Per la prima volta nella storia, nessun LED acceso sulla scrivania.','IL PC DEL CTO* È SPENTO: GLI ESPERTI INCREDULI'],
+        ['Dormo 14 ore, non mi pingate','Stato impostato su "non disturbare". Il team rispetta. Quasi.','IL CTO* È OFFLINE: SERVER IN MODALITÀ AUTOPILOTA'],
+      ]},
+  ];
+
+  function showStep(i){
+    if(i>=STEPS.length) return showReport();
+    const st=STEPS[i];
+    chEl.innerHTML=`<div class="tag">${st.tag}</div><h2>${st.title}</h2><div class="q">${st.q}</div>
+      <div class="choices">${st.opts.map((o,k)=>`<button class="btn" data-k="${k}">${o[0]}</button>`).join('')}</div>
+      <div class="reply"></div><div class="go"></div>`;
+    chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
+    chEl.scrollIntoView({behavior:'smooth',block:'center'});
+    say('<span class="who">SISTEMA ›</span> '+st.title.toLowerCase().replace(/^./,c=>c.toUpperCase())+'. Tocca a te, Mattia.');
+    chEl.querySelectorAll('.choices .btn').forEach(b=>b.onclick=()=>{
+      const o=st.opts[+b.dataset.k]; picks[st.key]=o[0];
+      chEl.querySelectorAll('.choices .btn').forEach(x=>{x.disabled=true; if(x!==b) x.style.opacity=.35});
+      b.style.background='var(--gold)';
+      const r=chEl.querySelector('.reply'); r.innerHTML='<b>▲ '+o[2]+'</b><br>'+o[1]; r.classList.add('show');
+      headline(o[2]); bump(3);
+      if(st.key==='chiusura'){ chime(); burst(120); } else burst(25);
+      say('<span class="ok">FLASH ›</span> '+o[2]);
+      const go=chEl.querySelector('.go');
+      go.innerHTML=`<button class="btn gold">${i===STEPS.length-1?'LEGGI LA CODE REVIEW ▶':'AVANTI ▶'}</button>`;
+      go.firstChild.onclick=()=>showStep(i+1);
+    });
+  }
+
+  function showReport(){
+    chEl.innerHTML=`<div class="tag">CODE REVIEW · DAL TEAM</div>
+      <h2>MATTIA vNEXT · REVIEW ANNUALE</h2>
+      <div class="report">
+        <div class="big">
+          <div class="kpi"><small>Esito</small><span>APPROVED ✓</span></div>
+          <div class="kpi"><small>Rating</small><span>★★★★★</span></div>
+          <div class="kpi"><small>Commento</small><span>LGTM</span></div>
+        </div>
+        <h4>PUNTI DI FORZA</h4>
+        <ul>
+          <li>CTO* affidabile: se qualcosa si rompe, sa già dove guardare</li>
+          <li>Desiderio in backlog: <b>${picks.desiderio||'—'}</b></li>
+          <li>Piano per la festa: <b>${picks.festa||'—'}</b></li>
+          <li>Motto ufficiale: <b>${picks.motto||'—'}</b></li>
+        </ul>
+        <h4>RISCHI NOTI</h4>
+        <ul>
+          <li>La festa potrebbe rallentare i deploy del giorno dopo</li>
+          <li>Il pulsante "rollback dell'età" non funziona (per fortuna)</li>
+          <li>Chiusura della giornata: <b>${picks.chiusura||'—'}</b></li>
+        </ul>
+        <h4>CONCLUSIONE</h4>
+        Codice pulito, uptime eccellente, ottimo compagno di squadra. Approvato per un altro anno in produzione.
+        <div class="end">BUON COMPLEANNO, MATTIA 🎂<br>— IL TUO TEAM</div>
+      </div>
+      <div class="go"><button class="btn ghost" id="again">RICOMINCIA DAL DEPLOY</button></div>`;
+    chEl.classList.remove('show'); void chEl.offsetWidth; chEl.classList.add('show');
+    chEl.scrollIntoView({behavior:'smooth',block:'start'});
+    jingle(); burst(100); bump(6);
+    say('<span class="ok">REVIEW PUBBLICATA ›</span> Esito: APPROVED. Commento: LGTM. Buon compleanno!');
+    document.getElementById('again').onclick=()=>{ window.scrollTo({top:0,behavior:'smooth'}); story(); };
+  }
+  document.getElementById('nextBtn').onclick=()=>{ nextWrap.classList.remove('show'); showStep(0); };
+  document.getElementById('go').onclick=()=>{
+    try{ ac=new (window.AudioContext||window.webkitAudioContext)() }catch(e){}
+    document.getElementById('start').style.display='none'; story();
+  };
+
+  // ---------- loop ----------
+  let last=performance.now(), acc=0;
+  function frame(now){
+    const dt=Math.min(.05,(now-last)/1000); last=now; state.t+=dt;
+    acc+=dt; const step = state.phase==='buy'?0.12:0.35;
+    while(acc>step){acc-=step; state.tickN++; tickChart();}
+    if(state.press>0) state.press-=dt;
+
+    g.setTransform(S,0,0,S,0,0);
+    state.sceneT+=dt;
+    if(state.scene==='party'){ drawParty(dt,state.sceneT); drawParts(dt); requestAnimationFrame(frame); return; }
+    if(state.scene==='interview'){ drawInterview(dt,state.sceneT); requestAnimationFrame(frame); return; }
+    const sky=g.createLinearGradient(0,0,0,H); sky.addColorStop(0,'#070b1a'); sky.addColorStop(1,'#1b2a4a');
+    g.fillStyle=sky; g.fillRect(0,0,W,H);
+    for(let i=0;i<40;i++){ const sx=(i*73)%W, sy=(i*37)%60; if((Math.floor(state.t*2)+i)%7) R(sx,sy,1,1,'#3a4a70'); }
+    buildings.forEach(b=>{ R(b.x,H-b.h,b.w,b.h,b.shade); b.wins.forEach(w=>{ if(w.on) R(w.x,w.y,2,3,w.c+'aa'); }); });
+    if(Math.random()<.05){ const b=buildings[Math.floor(Math.random()*buildings.length)]; const w=b.wins[Math.floor(Math.random()*b.wins.length)]; if(w) w.on=!w.on; }
+    billboards.forEach((b,i)=>{ const on=(Math.floor(state.t*1.5)+i)%4!==0; R(b.x-1,b.y-1,b.w+2,b.h+2,'#000'); R(b.x,b.y,b.w,b.h,on?b.c:'#222'); });
+    T('B-DAY',207,25,9,'#000','VT323','center');
+
+    R(232,4,84,11,'#000'); R(233,5,82,9,C.redD);
+    if(Math.floor(state.t*2)%2) R(236,8,3,3,C.red);
+    T('LIVE · CTO* AL LAVORO',277,5,9,C.white,'VT323','center');
+    drawMonitor(state.t);
+    drawMattia(state.t);
+    drawDesk();
+    drawSmoke(dt);
+    drawParts(dt);
+    drawFloats(dt);
+    drawTape(state.t);
+    if(state.phase==='buy' && Math.random()<.15) burst(4);
+    requestAnimationFrame(frame);
+  }
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(()=>requestAnimationFrame(frame));
+})();
+</script>
+</body>
+</html>
